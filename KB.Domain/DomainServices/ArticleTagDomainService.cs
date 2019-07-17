@@ -79,30 +79,20 @@ namespace KB.Domain.DomainServices
         }
         public int Delete(ArticleTag entity)
         {
-            return RunDelete(() =>
-            {
-                _repository.Delete(entity);
-            });
+            return _repository.Delete(entity);
         
         }
 
         public int Delete(int id)
         {
-            return RunDelete(() =>
-            {
-                _repository.Delete(id);
-            });
+            return _repository.Delete(id);
 
         }
 
         public int Delete(int articleId, int tagId)
         {
-            return RunDelete(() =>
-            {
-                var entity = this.Get(articleId, tagId);
-                _repository.Delete(entity);
-
-            });
+             var entity = this.Get(articleId, tagId);
+            return _repository.Delete(entity);
         }
 
         public ArticleTag Get(int articleId, int tagId)

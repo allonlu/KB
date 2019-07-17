@@ -12,10 +12,10 @@ namespace KB.Domain.Repositories
         IQueryable<TEntity> GetAll();
         TEntity Insert(TEntity entity);
         TEntity Update(TEntity entity);
-        void Delete(int id);
-        void Delete(TEntity entity);
+        int Delete(int id);
+        int Delete(TEntity entity);
 
-        void Delete(Expression<Func<TEntity, bool>> predicate);
+        int Delete(Expression<Func<TEntity, bool>> predicate);
 
         bool Exists(Expression<Func<TEntity, bool>> predicate);
 

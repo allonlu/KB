@@ -16,14 +16,6 @@ namespace KB.Domain.DomainServices
         {
             _unitOfWorkManager = unitOfWorkManager;
         }
-        protected int RunDelete(Action action)
-        {
-            using(var uow = _unitOfWorkManager.Begin())
-            {
 
-                action();
-                return uow.Complete();
-            }
-        }
     }
 }

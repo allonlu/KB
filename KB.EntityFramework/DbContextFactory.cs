@@ -11,6 +11,7 @@ namespace KB.EntityFramework
     {
         public static DbContext Create(IKernel kernel)
         {
+            
             return new KBDataContext();
         }
     }

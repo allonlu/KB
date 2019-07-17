@@ -1,6 +1,6 @@
 ﻿@using KB.Application.Dto.Articles
 @using System.Collections.Generic
-@Model IList<ArticleDto>
+@model IList<ArticleWithTagsDto>
     @{
         ViewBag.Title = "Article";
     }
@@ -8,12 +8,23 @@
     @Html.ActionLink("New","Add")
             <table class="table table-bordered">
 
-                @foreach (ArticleDto dto in Model)
+                @foreach (ArticleWithTagsDto dto in Model)
                 {
                     <tr>
                         <td>@dto.Id</td>
                         <td>@dto.Title</td>
                         <td>@dto.Description</td>
+                        <td>@dto.Tags.Count</td>
+                        <td>
+                            @foreach (var t in dto.Tags)
+                            {
+                                <span class="badge">@t?.Name</span>
+                            }
+                            <form method="post" action="Article/AddTag/@dto.Id">
+                                <input type="text" name="Name"/>
+                                <input type="submit" value="AddTag" />
+                            </form>
+                        </td>
 
                     </tr>
                 }

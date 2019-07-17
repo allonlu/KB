@@ -7,6 +7,7 @@ using Castle.Facilities.AspNetCore;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.MsDependencyInjection;
+using KB.Application;
 using KB.Web.Host.Controllers;
 using KB.Web.Host.Ioc;
 using Microsoft.AspNetCore.Builder;
@@ -26,11 +27,10 @@ namespace KB.Web.Host
         {
             Configuration = configuration;
 
-            Mapper.Initialize(cfg =>
-                cfg.AddProfiles(new[] {
-                        "KB.Application"
-                })
-            );
+
+            var express = new AutoMapper.Configuration.MapperConfigurationExpression();
+            express.AddProfile<DtoMappings>();
+            Mapper.Initialize(express);
         }
 
         public IConfiguration Configuration { get; }

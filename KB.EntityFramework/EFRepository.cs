@@ -36,13 +36,18 @@ namespace KB.EntityFramework
 
         public TEntity Insert(TEntity entity)
         {
-            return _dataSet.Add(entity).Entity;
+            _dataSet.Add(entity);
+            _dbContext.SaveChanges();
+            return entity;
+
         }
 
-        public void Delete(TEntity entity)
+        public int Delete(TEntity entity)
         {
             _dataSet.Remove(entity);
- 
+
+            return _dbContext.SaveChanges();
+
         }
 
 
@@ -50,25 +55,28 @@ namespace KB.EntityFramework
         {
             
             _dbContext.Entry(entity).State = EntityState.Modified;
+            _dbContext.SaveChanges();
             return Get(entity.Id);
         }
 
 
-        public void Delete(int id)
+        public int Delete(int id)
         {
             _dataSet.Remove(new TEntity() { Id = id });
-           
+           return  _dbContext.SaveChanges();
+
         }
 
-        public void Delete(Expression<Func<TEntity, bool>> predicate)
+        public int Delete(Expression<Func<TEntity, bool>> predicate)
         {
            
             foreach (var entity in GetAll().Where(predicate).ToList())
             {
                Delete(entity);
-                
+
             }
-           
+            return _dbContext.SaveChanges();
+
         }
 
         public bool Exists(Expression<Func<TEntity, bool>> predicate)

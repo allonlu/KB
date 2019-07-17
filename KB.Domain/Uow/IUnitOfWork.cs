@@ -9,6 +9,6 @@ namespace KB.Domain.Uow
     public interface IUnitOfWork:IDisposable
     {
         void SetSiteId(int siteId);
-        int Complete();
+        void Complete();
     }
 }

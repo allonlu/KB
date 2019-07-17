@@ -1,5 +1,6 @@
 ﻿using KB.Domain.Uow;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,26 +12,32 @@ namespace KB.EntityFramework
 {
     public class EFUnitOfWork : IUnitOfWork
     {
-        private TransactionScope _transactionScope;
+        private IDbContextTransaction _transaction ;
         private DbContext _dbContext;
+        private bool _isCommit;
         public EFUnitOfWork(DbContext dbContext, TransactionOptions options)
         {
-            _transactionScope = new TransactionScope(TransactionScopeOption.Required, options);
+          
+            _transaction = dbContext.Database.BeginTransaction();
+            _isCommit = false;
             _dbContext = dbContext;
+           
+         
         }
 
         public EventHandler Disposed;
-        public int Complete()
+        public void Complete()
         {
-            var i=_dbContext.SaveChanges();
-            _transactionScope.Complete();
-            return i;
+            _transaction.Commit();
+            _isCommit = true;
         }
 
         public void Dispose()
         {
             Disposed(this, null);
-            _transactionScope.Dispose();
+            if (!_isCommit)
+                _transaction.Rollback();
+            _transaction.Dispose();
         }
 
         public void SetSiteId(int siteId)

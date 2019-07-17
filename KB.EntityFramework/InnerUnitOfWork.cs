@@ -13,9 +13,9 @@ namespace KB.EntityFramework
     public class InnerUnitOfWork : IUnitOfWork
     {
        
-        public int Complete()
+        public void Complete()
         {
-            return 0;
+           
         }
 
         public void Dispose()

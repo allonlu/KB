@@ -89,16 +89,18 @@ namespace KB.Application.AppServices
             var query = from a in _articleDomainService.GetAll()
                         from at in _articleTagDomainService.GetAll().Where(t => t.ArticleId == a.Id).DefaultIfEmpty()
                         from t in _tagDomainService.GetAll().Where(t => t.Id == at.TagId).DefaultIfEmpty()
-                        group t by a into g
-                        orderby  g.Key
-                        select new ArticleWithTagsDto()
-                        {
-                            Id=g.Key.Id,
-                            Title=g.Key.Title,
-                            Description=g.Key.Description,
-                            Tags=g.AsQueryable().ProjectTo<TagDto>().ToList()
-                        };
-            return query.ToList();
+                        select new { Article = a, Tag = t };
+
+            var query1 = from t in query
+                         group t by t.Article into g
+                         select new ArticleWithTagsDto()
+                         {
+                             Id = g.Key.Id,
+                             Title = g.Key.Title,
+                             Description = g.Key.Description,
+                             Tags = g.Select(t => Mapper.Map<TagDto>(t.Tag)).ToList()
+                   };
+            return query1.ToList();
         }
 
         public IList<TagDto> GetTags(int articleId)

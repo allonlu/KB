@@ -22,20 +22,15 @@ namespace KB.Domain.DomainServices
 
         public int Delete(int articleId)
         {
-            return RunDelete(() =>
-            {
-                _articleRepository.Delete(articleId);
-            });
+            return  _articleRepository.Delete(articleId);
          
             
         }
 
         public int Delete(Article entity)
         {
-            return RunDelete(() =>
-            {
-                _articleRepository.Delete(entity);
-            });
+            return _articleRepository.Delete(entity);
+            
         }
 
         public Article Get(int id)
