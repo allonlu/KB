@@ -1,4 +1,5 @@
-﻿using Castle.Windsor;
+﻿using Castle.Facilities.AspNetCore;
+using Castle.Windsor;
 using Castle.Windsor.MsDependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace KB.Web.Host.Ioc
 {
-    public class ServiceResolver
+    public class ServiceResolver : IServiceProvider
     {
       
             private static WindsorContainer container;
@@ -20,14 +21,14 @@ namespace KB.Web.Host.Ioc
                 container = new WindsorContainer();
 
                 container.Install(new KBInstaller());
-            
+                services.AddWindsor(container);
                 serviceProvider = WindsorRegistrationHelper.CreateServiceProvider(container, services);
             }
 
-            public IServiceProvider GetServiceProvider()
-            {
-                return serviceProvider;
-            }
-        
+        public object GetService(Type serviceType)
+        {
+            return serviceProvider.GetService(serviceType);
+        }
+
     }
 }

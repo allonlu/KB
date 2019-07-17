@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Castle.Facilities.AspNetCore;
+using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.MsDependencyInjection;
+using KB.Web.Host.Controllers;
 using KB.Web.Host.Ioc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,9 +20,17 @@ namespace KB.Web.Host
 {
     public class Startup
     {
+        private static readonly WindsorContainer Container = new WindsorContainer();
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            Mapper.Initialize(cfg =>
+                cfg.AddProfiles(new[] {
+                        "KB.Application"
+                })
+            );
         }
 
         public IConfiguration Configuration { get; }
@@ -26,6 +38,9 @@ namespace KB.Web.Host
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            // Setup component model contributors for making windsor services available to IServiceProvider
+            Container.AddFacility<AspNetCoreFacility>(f => f.CrossWiresInto(services));
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -33,12 +48,14 @@ namespace KB.Web.Host
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            
+            RegisterApplicationComponents(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            return services.AddWindsor(Container,
+                 opts => opts.UseEntryAssembly(typeof(HomeController).Assembly), // <- Recommended
+                 () => services.BuildServiceProvider(validateScopes: false));
 
-            var container = new ServiceResolver(services).GetServiceProvider();
-            return container;
+            //return new ServiceResolver(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +69,10 @@ namespace KB.Web.Host
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            Container.GetFacility<AspNetCoreFacility>().RegistersMiddlewareInto(app);
 
+            // Add custom middleware, do this if your middleware uses DI from Windsor
+       
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
@@ -62,6 +82,13 @@ namespace KB.Web.Host
                     name: "default",
                     template: "{controller=Article}/{action=Index}/{id?}");
             });
+        }
+        private void RegisterApplicationComponents(IServiceCollection services)
+        {
+            // Application components
+            Container.Register(Component.For<IHttpContextAccessor>().ImplementedBy<HttpContextAccessor>());
+            Container.Install(new KBInstaller());
+
         }
     }
 }

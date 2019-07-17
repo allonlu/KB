@@ -1,6 +1,7 @@
-﻿using Castle.Core.Logging;
+﻿
 using KB.Infrastructure.ActionResult;
 using KB.Infrastructure.Ioc;
+using KB.Infrastructure.Runtime.Logging;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

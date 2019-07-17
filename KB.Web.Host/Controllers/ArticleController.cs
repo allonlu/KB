@@ -13,7 +13,7 @@ namespace KB.Web.Host.Controllers
             _articleAppService = articleAppService;
         }
         // GET: Article
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return Run(() =>
             {
@@ -24,12 +24,12 @@ namespace KB.Web.Host.Controllers
 
         }
         [HttpGet]
-        public ActionResult Add()
+        public IActionResult Add()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Add(InsertArticleDto dto)
+        public IActionResult Add(InsertArticleDto dto)
         {
            
 
@@ -39,7 +39,7 @@ namespace KB.Web.Host.Controllers
                 return RedirectToAction("Index");
             });
         }
-        public ActionResult GetList(ListArticleInputDto dto)
+        public IActionResult GetList(ListArticleInputDto dto)
         {
             //try
             //{
@@ -60,7 +60,7 @@ namespace KB.Web.Host.Controllers
             });
             
         }
-        public ActionResult Get(int id)
+        public IActionResult Get(int id)
         {
             return Run(() =>
             {
