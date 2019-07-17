@@ -1,0 +1,23 @@
+﻿@using KB.Application.Dto.Articles
+@using System.Collections.Generic
+@Model IList<ArticleDto>
+    @{
+        ViewBag.Title = "Article";
+    }
+    <h2>Article</h2>
+    @Html.ActionLink("New","Add")
+            <table class="table table-bordered">
+
+                @foreach (ArticleDto dto in Model)
+                {
+                    <tr>
+                        <td>@dto.Id</td>
+                        <td>@dto.Title</td>
+                        <td>@dto.Description</td>
+
+                    </tr>
+                }
+
+                </table>
+
+

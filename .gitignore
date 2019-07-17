@@ -3,3 +3,13 @@
 ################################################################################
 
 /.vs/KB
+/KB.Application/bin/Debug/netcoreapp2.2
+/KB.Application/obj
+/KB.Domain/bin/Debug/netcoreapp2.2
+/KB.Domain/obj
+/KB.EntityFramework/bin/Debug/netcoreapp2.2
+/KB.EntityFramework/obj
+/KB.Infrastructure/bin/Debug
+/KB.Infrastructure/obj
+/KB.Web.Host/bin/Debug/netcoreapp2.2
+/KB.Web.Host/obj
