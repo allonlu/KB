@@ -8,7 +8,7 @@ namespace KB.Infrastructure.ActionResult
 {
    
     
-    public class ActionResult<T>
+    public class MyActionResult<T>
     {
         public bool IsSuccess { get; set; }
         public T Data { get; set; }

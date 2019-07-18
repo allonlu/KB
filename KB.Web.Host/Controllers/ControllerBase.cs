@@ -21,12 +21,27 @@ namespace KB.Web.Host.Controllers
         [Mandatory]
         public ILogger Logger { get; set; }
 
-        protected ActionResult Run(Func<ActionResult> action)
+        protected MyActionResult<T> Run<T>(Func<MyActionResult<T>> action)
         {
             try
             {
                 return action();
                 
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+                return ActionResultHelper.Fail<T>(e);
+
+            }
+        }
+
+        protected IActionResult Run(Func<IActionResult> action)
+        {
+            try
+            {
+                return action();
+
             }
             catch (Exception e)
             {
