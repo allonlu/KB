@@ -18,12 +18,14 @@ namespace KB.Domain.DomainServices
 
         public int Delete(int tagId)
         {
-            return _repository.Delete(tagId) ;
+            var delCount= _repository.Delete(tagId) ;
+            return delCount;
         }
 
         public int Delete(Tag entity)
         {
-            return _repository.Delete(entity);
+            var delCount = _repository.Delete(entity);
+            return delCount;
         }
 
         public Tag Get(int tagId)

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -41,6 +42,11 @@ namespace KB.Web.Host
             // Setup component model contributors for making windsor services available to IServiceProvider
             Container.AddFacility<AspNetCoreFacility>(f => f.CrossWiresInto(services));
 
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AutomaticAuthentication = false;
+            });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -48,9 +54,11 @@ namespace KB.Web.Host
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+   
             RegisterApplicationComponents(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             return services.AddWindsor(Container,
                  opts => opts.UseEntryAssembly(typeof(HomeController).Assembly), // <- Recommended
                  () => services.BuildServiceProvider(validateScopes: false));

@@ -13,11 +13,11 @@ namespace KB.EntityFramework
 
 
 
-    public  class Repository<TEntity> : IRepository<TEntity> where TEntity :class, IEntity,new()
+    public  class EFRepository<TEntity> : IRepository<TEntity> where TEntity :class, IEntity,new()
     { 
         protected DbContext _dbContext;
         protected DbSet<TEntity> _dataSet;
-        public Repository(DbContext dbContext)
+        public EFRepository(DbContext dbContext)
         {
             _dataSet = dbContext.Set<TEntity>();
             _dbContext = dbContext;

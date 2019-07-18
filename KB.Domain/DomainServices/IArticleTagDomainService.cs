@@ -22,6 +22,7 @@ namespace KB.Domain.DomainServices
 
         int Delete(int id);
         int DeleteByArticle(int articleId);
+        int DeleteByTag(int tagId);
 
         int Delete(int articleId, int tagId);
 

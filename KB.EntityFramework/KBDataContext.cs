@@ -1,17 +1,22 @@
 
 using KB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace KB.EntityFramework
 {
-
-
+   
     public class KBDataContext : DbContext
     {
-        public KBDataContext() 
+        private IConfiguration _configuration;
+        public KBDataContext()
         {
 
         }
+        //public KBDataContext(IConfiguration configuration)
+        //{
+        //    _configuration=configuration;
+        //}
 
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<ArticleTag> ArticleTags { get; set; }
@@ -19,7 +24,7 @@ namespace KB.EntityFramework
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=KBTest;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=.;Database=KBTest;User=sa;Password=Aa000000;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

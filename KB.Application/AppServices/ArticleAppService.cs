@@ -53,9 +53,8 @@ namespace KB.Application.AppServices
             //return  _articleDomainService.Delete(articleId);
             return Run("Article.Delete", () =>
             {
-                int delCount = 0;
+                int delCount = _articleTagDomainService.DeleteByArticle(articleId);
                 delCount += _articleDomainService.Delete(articleId);
-                delCount += _articleTagDomainService.DeleteByArticle(articleId);
 
                 return delCount;
                

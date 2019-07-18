@@ -22,7 +22,7 @@ namespace KB.EntityFramework
                         .LifestyleScoped(),
 
                 Component.For(typeof(IRepository<>))
-                       .ImplementedBy(typeof(Repository<>))
+                       .ImplementedBy(typeof(EFRepository<>))
                        .LifestyleScoped(),
 
                 Component.For(typeof(IUnitOfWorkManager))

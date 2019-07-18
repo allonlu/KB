@@ -22,15 +22,15 @@ namespace KB.Domain.DomainServices
 
         public int Delete(int articleId)
         {
-            return  _articleRepository.Delete(articleId);
-         
-            
+            var delCount=  _articleRepository.Delete(articleId);
+            return delCount;
         }
 
         public int Delete(Article entity)
         {
-            return _articleRepository.Delete(entity);
-            
+            var delCount = _articleRepository.Delete(entity);
+            return delCount;
+
         }
 
         public Article Get(int id)
@@ -50,7 +50,7 @@ namespace KB.Domain.DomainServices
 
         public Article Update(Article entity)
         {
-            throw new NotImplementedException();
+            return _articleRepository.Update(entity);
         }
     }
 }

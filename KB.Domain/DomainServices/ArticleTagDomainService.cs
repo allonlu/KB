@@ -133,5 +133,10 @@ namespace KB.Domain.DomainServices
         {
             return _repository.Delete(e => e.ArticleId == articleId);
         }
+
+        public int DeleteByTag(int tagId)
+        {
+            return _repository.Delete(e => e.TagId == tagId);
+        }
     }
 }

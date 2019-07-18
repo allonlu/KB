@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Security.Claims;
 using KB.Infrastructure.Runtime.Security;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace KB.EntityFramework
 {
