@@ -5,7 +5,7 @@
         ViewBag.Title = "Article";
     }
     <h2>Article</h2>
-    @Html.ActionLink("New","Add")
+     @Html.ActionLink("New", "Add",new {},new {Class="btn btn-primary",Title="Create a new artile"})
             <table class="table table-bordered">
 
                 @foreach (ArticleWithTagsDto dto in Model)
@@ -16,14 +16,24 @@
                         <td>@dto.Description</td>
                         <td>@dto.Tags.Count</td>
                         <td>
-                            @foreach (var t in dto.Tags)
-                            {
-                                <span class="badge">@t?.Name</span>
-                            }
-                            <form method="post" action="Article/AddTag/@dto.Id">
-                                <input type="text" name="Name"/>
-                                <input type="submit" value="AddTag" />
+                            <div>
+                               @foreach (var t in dto.Tags)
+                               {
+                                    @if (t != null)
+                                    {
+
+                                      @Html.ActionLink(t.Name, "RemoveTag", new { articleId = dto.Id, tagId = t.Id }, new { Class = "badge badge-primary",Title="Click to delete the tag" })
+                                   }
+                               }
+                            </div>
+                     
+                            <form class="form-inline" method="post" action="Article/AddTag/@dto.Id">
+                                <input type="text" class="form-control  form-control-sm" name="Name"/>
+                                <input class="btn btn-info btn-sm" type="submit" value="AddTag" />
                             </form>
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "Delete",new {Id=dto.Id },new {Class="btn btn-danger"})
                         </td>
 
                     </tr>

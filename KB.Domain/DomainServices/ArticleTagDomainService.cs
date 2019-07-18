@@ -89,6 +89,7 @@ namespace KB.Domain.DomainServices
 
         }
 
+
         public int Delete(int articleId, int tagId)
         {
              var entity = this.Get(articleId, tagId);
@@ -126,6 +127,11 @@ namespace KB.Domain.DomainServices
         public IQueryable<ArticleTag> GetAll()
         {
             return _repository.GetAll();
+        }
+
+        public int DeleteByArticle(int articleId)
+        {
+            return _repository.Delete(e => e.ArticleId == articleId);
         }
     }
 }

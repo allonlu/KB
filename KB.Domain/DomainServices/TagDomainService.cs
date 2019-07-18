@@ -38,6 +38,11 @@ namespace KB.Domain.DomainServices
 
         public Tag Insert(Tag entity)
         {
+            //如果已经存在的名字，则直接使用这个实体，不创建。
+            var e = _repository.GetAll().FirstOrDefault(t => t.Name == entity.Name);
+            if (e != null)
+                return e;
+
             return _repository.Insert(entity);
         }
 

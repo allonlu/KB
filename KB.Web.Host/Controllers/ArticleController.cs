@@ -65,13 +65,31 @@ namespace KB.Web.Host.Controllers
         [HttpPost("Article/AddTag/{articleId}")]
         public IActionResult AddTag(int articleId, TagDto dto)
         {
-            return Run(() =>
+            Run(()=>
             {
                 _articleAppService.AddTag(articleId, dto);
 
-                return RedirectToAction("Index");
+            });
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete(int id)
+        {
+            Run(() =>
+            {
+                _articleAppService.Delete(id);
 
             });
+            return RedirectToAction("Index");
+        }
+        public IActionResult RemoveTag(ArticleTagDto dto)
+                
+        {
+            Run(()=>
+            {
+                _articleAppService.RemoveTag(dto);
+
+            });
+            return RedirectToAction("Index");
         }
         public IActionResult Get(int id)
         {

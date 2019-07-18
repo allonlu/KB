@@ -29,9 +29,18 @@ namespace KB.EntityFramework
                 .ToTable("t_KB_Article")
                 .HasKey(t=>t.Id);
 
-            modelBuilder.Entity<Tag>()
-                .ToTable("t_KB_Tag")
-                .HasKey(t=>t.Id);
+            modelBuilder.Entity<Tag>(
+                  entity =>
+                  {
+                      entity.ToTable("t_KB_Tag")
+                            .HasKey(t => t.Id);
+
+                      entity.HasIndex(t => t.Name).IsUnique();
+                  }
+                );
+
+                
+                
 
 
             modelBuilder.Entity<ArticleTag>(

@@ -35,5 +35,17 @@ namespace KB.Web.Host.Controllers
 
             }
         }
+        protected void Run(Action action)
+        {
+            try
+            {
+                 action();
+
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+            }
+        }
     }
 }
