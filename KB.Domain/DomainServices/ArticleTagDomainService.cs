@@ -127,6 +127,7 @@ namespace KB.Domain.DomainServices
         public IQueryable<ArticleTag> GetAll()
         {
             return _repository.GetAll();
+
         }
 
         public int DeleteByArticle(int articleId)

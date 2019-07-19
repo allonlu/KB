@@ -17,7 +17,8 @@ namespace KB.EntityFramework
         private bool _isCommit;
         public EFUnitOfWork(DbContext dbContext, TransactionOptions options)
         {
-          
+
+           
             _transaction = dbContext.Database.BeginTransaction();
             _isCommit = false;
             _dbContext = dbContext;

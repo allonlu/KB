@@ -4,6 +4,7 @@ using KB.Application.Dto.Tags;
 using KB.Domain.DomainServices;
 using KB.Domain.Entities;
 using KB.Domain.Uow;
+using KB.Infrastructure.Runtime.Authorization;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,37 +21,33 @@ namespace KB.Application.AppServices
             _tagDomainService = tagDomainService;
         }
 
+        [Permission("Tag.Delete")]
         public int Delete(int tagId)
         {
-            Permission("Tag.Delete");
             return _tagDomainService.Delete(tagId);
         }
-
+        [Permission("Tag.Read")]
         public TagDto Get(int tagId)
         {
-            Permission("Tag.Read");
             return Mapper.Map<TagDto>(_tagDomainService.Get(tagId));
         }
-
+        [Permission("Tag.Read")]
         public IList<TagDto> GetList(ListTagInputDto dto)
         {
-            Permission("Tag.Read");
             return _tagDomainService.GetAll()
                         .Where(t => t.Name.Contains(dto.Name))
                         .ProjectTo<TagDto>()
                         .ToList();
         }
-
+        [Permission("Tag.Insert")]
         public TagDto Insert(InsertTagDto dto)
         {
-            Permission("Tag.Insert");
             var entity = _tagDomainService.Insert(Mapper.Map<Tag>(dto));
             return Mapper.Map<TagDto>(entity);
         }
-
+        [Permission("Tag.Update")]
         public TagDto Update(TagDto dto)
         {
-            Permission("Tag.Update");
             var entity = _tagDomainService.Update(Mapper.Map<Tag>(dto));
             return Mapper.Map<TagDto>(entity);
 

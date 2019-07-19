@@ -43,17 +43,7 @@ namespace KB.Web.Host.Controllers
         }
         public IActionResult GetList(ListArticleInputDto dto)
         {
-            //try
-            //{
-            //    var list= _articleAppService.GetList(dto);
-            //    return Json(ActionResultHelper.Success(list));
-            //}
-            //catch(Exception e)
-            //{
-            //    Logger.Error(e.Message);
-            //    return Json(ActionResultHelper.Fail(e));
 
-            //}
 
             return Run(() =>
             {
@@ -63,7 +53,7 @@ namespace KB.Web.Host.Controllers
             
         }
         [HttpPost("Article/AddTag/{articleId}")]
-        public IActionResult AddTag(int articleId, [FromBody] InsertTagDto dto)
+        public IActionResult AddTag(int articleId, InsertTagDto dto)
         {
             Run(()=>
             {
@@ -98,17 +88,6 @@ namespace KB.Web.Host.Controllers
                var article = _articleAppService.Get(id);
                return Json(ActionResultHelper.Success(article));
             });
-            //try
-            //{
-            //    var article = _articleAppService.Get(id);
-            //    return Json(ActionResultHelper.Success(article));
-            //}
-            //catch (Exception e)
-            //{
-            //    Logger.Error(e.Message);
-            //    return Json(ActionResultHelper.Fail(e));
-
-            //}
         }
     }
 }

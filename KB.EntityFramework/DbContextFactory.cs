@@ -10,6 +10,7 @@ namespace KB.EntityFramework
 {
     public class DbContextFactory
     {
+       
         public static DbContext Create(IKernel kernel)
         {
             

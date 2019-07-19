@@ -2,6 +2,7 @@
 using KB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace KB.EntityFramework
 {
@@ -9,15 +10,16 @@ namespace KB.EntityFramework
     public class KBDataContext : DbContext
     {
         private IConfiguration _configuration;
+        public Guid Key { get; private set; }
         public KBDataContext()
         {
-
+            Key = Guid.NewGuid();
         }
         //public KBDataContext(IConfiguration configuration)
         //{
         //    _configuration=configuration;
         //}
-
+        
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<ArticleTag> ArticleTags { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }

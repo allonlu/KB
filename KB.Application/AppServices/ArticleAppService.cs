@@ -8,9 +8,13 @@ using KB.Application.Dto.Tags;
 using System.Collections.Generic;
 using KB.Domain.Uow;
 using KB.Infrastructure.Extension;
+using KB.Infrastructure.Runtime.Authorization;
 
 namespace KB.Application.AppServices
 {
+    /// <summary>
+    /// 实现AOP编程
+    /// </summary>
     public class ArticleAppService : AppServiceBase,IArticleAppService
     {
         private IArticleDomainService _articleDomainService;
@@ -26,55 +30,39 @@ namespace KB.Application.AppServices
             _tagDomainService = tagDomainService;
         }
 
-   
+
+        [Permission("Article.Tag.Add")]
         public TagDto AddTag(ArticleTagDto dto)
         {
-            //Permission("Article.AddTag");
-            //_articleTagDomainService.Insert(Mapper.Map<ArticleTag>(dto));
 
-            return Run("Article.AddTag",() =>
-            {
                 var t = _articleTagDomainService.Insert(Mapper.Map<ArticleTag>(dto));
                 return Mapper.Map<TagDto>(t);
-            });
+           
         }
-
+        [Permission("Article.Tag.Add")]
         public TagDto AddTag(int articleId, InsertTagDto tag)
         {
-            //Permission("Article.AddTag");
-            //_articleTagDomainService.AddTag(articleId, Mapper.Map<Tag>(tag));
-            return Run("Article.AddTag", () =>
-            {
+
                var t= _articleTagDomainService.AddTag(articleId, Mapper.Map<Tag>(tag));
                 return Mapper.Map<TagDto>(t);
-            });
+           
         }
-
+        [Permission("Article.Delete")]
         public int Delete(int articleId)
         {
-            //Permission("Article.Delete");
-            //return  _articleDomainService.Delete(articleId);
-            return Run("Article.Delete", () =>
-            {
+            
                 int delCount = _articleTagDomainService.DeleteByArticle(articleId);
                 delCount += _articleDomainService.Delete(articleId);
 
                 return delCount;
-               
-
-            });
         }
-
+        [Permission("Article.Read")]
         public ArticleDto Get(int id)
         {
-            //Permission("Article.Read");
-            //var entity = _articleDomainService.Get(id);
-            //return Mapper.Map<ArticleDto>(entity);
-            return Run("Article.Read", () =>
-            {
+            
                 var entity = _articleDomainService.Get(id);
                 return Mapper.Map<ArticleDto>(entity);
-            });
+          
         }
 
         private IQueryable<Article> Query(ListArticleInputDto dto)
@@ -83,21 +71,17 @@ namespace KB.Application.AppServices
                             .WhereIf(e => e.Title.Contains(dto.Title), !string.IsNullOrEmpty(dto.Title))
                             .WhereIf(e => e.Id == dto.articleId, dto.articleId.HasValue);
         }
-
+        [Permission("Article.Read")]
         public IList<ArticleDto> GetList(ListArticleInputDto dto)
         {
-            return Run("Article.Read", () =>
-            {
+            
                 var query = Query(dto).OrderBy(e => e.Id);
 
                 return query.ProjectTo<ArticleDto>().ToList();
-            });
+         
 
-            //Permission("Article.Read");
-            //var query = _articleDomainService.GetAll().Where(e => e.Title.Contains(dto.Title)).OrderBy(e => e.Title);
-            //return query.ProjectTo<ArticleDto>().ToList();
         }
-
+        [Permission("Article.Read")]
         public IList<ArticleWithTagsDto> GetListWithTags(ListArticleInputDto dto)
         {
             var query = from a in Query(dto)
@@ -112,87 +96,56 @@ namespace KB.Application.AppServices
                              Id = g.Key.Id,
                              Title = g.Key.Title,
                              Description = g.Key.Description,
-                             Tags = g.Select(t => Mapper.Map<TagDto>(t.Tag)).ToList()
+                             Tags = g.Where(e=>e.Tag!=null).Select(t => Mapper.Map<TagDto>(t.Tag)).ToList()
                    };
             return query1.ToList();
         }
-
+        [Permission("Article.Read")]
         public IList<TagDto> GetTags(int articleId)
         {
-            return Run("Article.Read", () =>
-            {
-                return _articleTagDomainService.GetTags(articleId).ProjectTo<TagDto>().ToList();
-            });
-
-            //Permission("Article.Read");
-            //return _articleTagDomainService.GetTags(articleId).ProjectTo<TagDto>().ToList();
+            
+           return _articleTagDomainService.GetTags(articleId).ProjectTo<TagDto>().ToList();
+           
         }
-
+        [Permission("Article.Insert")]
         public ArticleDto Insert(InsertArticleDto dto)
         {
-            //Permission("Article.Insert");
-            //var entity = _articleDomainService.Insert(Mapper.Map<Article>(dto));
-            //return Mapper.Map<ArticleDto>(entity);
-
-            return Run("Article.Insert", () =>
-            {
+           
                 var entity = _articleDomainService.Insert(Mapper.Map<Article>(dto));
                 return Mapper.Map<ArticleDto>(entity);
-            });
+          
         }
 
-
+        [Permission("Article.Tag.Insert")]
         public ArticleDto InsertWithTags(InsertArticleDto dto, IList<InsertTagDto> tags)
         {
-            return Run("Article.Insert", () =>
-            {
+          
                 var entity = _articleDomainService.Insert(Mapper.Map<Article>(dto));
                 _articleTagDomainService.AddTags(entity.Id, Mapper.Map<IList<Tag>>(tags));
                 return Mapper.Map<ArticleDto>(entity);
-            });
-
-            //using (var uow = _unitOfWorkManager.Begin())
-            //{
-            //    uow.SetSiteId(Session.GetSiteId());
-
-            //    Permission("Article.Insert");
            
-            //    var entity = _articleDomainService.Insert(Mapper.Map<Article>(dto));
-            //    _articleTagDomainService.AddTags(entity.Id, Mapper.Map<IList<Tag>>(tags));
-            //    uow.Complete();
-            //    return Mapper.Map<ArticleDto>(entity);
-            //}
-        }
 
+        }
+        [Permission("Article.Tag.Remove")]
         public int RemoveTag(ArticleTagDto dto)
         {
-            //Permission("Article.RemoveTag");
-            //_articleTagDomainService.Delete(dto.ArticleId, dto.TagId);
-
-           return Run("Article.RemoveTag", () =>
-            {
-               return  _articleTagDomainService.Delete(dto.ArticleId, dto.TagId);
-            });
+             return  _articleTagDomainService.Delete(dto.ArticleId, dto.TagId);
         }
+
+        [Permission("Article.Tag.Remove")]
         public int RemoveTag(int articleId)
         {
-            return Run("Article.RemoveTag", () =>
-            {
-               return  _articleTagDomainService.DeleteByArticle(articleId);
-            });
+           
+            return  _articleTagDomainService.DeleteByArticle(articleId);
+ 
         }
-
+        [Permission("Article.Update")]
         public ArticleDto Update(ArticleDto dto)
         {
-            //Permission("Article.Update");
-            //var entity=  _articleDomainService.Update(Mapper.Map<Article>(dto));
-            //return Mapper.Map<ArticleDto>(entity);
 
-            return Run("Article.Update", () =>
-            {
-                var entity = _articleDomainService.Update(Mapper.Map<Article>(dto));
-                return Mapper.Map<ArticleDto>(entity);
-            });
+             var entity = _articleDomainService.Update(Mapper.Map<Article>(dto));
+             return Mapper.Map<ArticleDto>(entity);
+           
         }
     }
 }
