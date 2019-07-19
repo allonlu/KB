@@ -10,6 +10,8 @@ namespace KB.Application.Dto.Articles
 {
    public class ListArticleInputDto
     {
+        public int? articleId { get; set; }
+
         [MaxLength(Constant.MaxNameLength)]
         public string Title { get; set; }
     }

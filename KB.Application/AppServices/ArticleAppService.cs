@@ -7,6 +7,7 @@ using System.Linq;
 using KB.Application.Dto.Tags;
 using System.Collections.Generic;
 using KB.Domain.Uow;
+using KB.Infrastructure.Extension;
 
 namespace KB.Application.AppServices
 {
@@ -26,24 +27,26 @@ namespace KB.Application.AppServices
         }
 
    
-        public void AddTag(ArticleTagDto dto)
+        public TagDto AddTag(ArticleTagDto dto)
         {
             //Permission("Article.AddTag");
             //_articleTagDomainService.Insert(Mapper.Map<ArticleTag>(dto));
 
-            Run("Article.AddTag",() =>
+            return Run("Article.AddTag",() =>
             {
-                _articleTagDomainService.Insert(Mapper.Map<ArticleTag>(dto));
+                var t = _articleTagDomainService.Insert(Mapper.Map<ArticleTag>(dto));
+                return Mapper.Map<TagDto>(t);
             });
         }
 
-        public void AddTag(int articleId, TagDto tag)
+        public TagDto AddTag(int articleId, InsertTagDto tag)
         {
             //Permission("Article.AddTag");
             //_articleTagDomainService.AddTag(articleId, Mapper.Map<Tag>(tag));
-            Run("Article.AddTag", () =>
+            return Run("Article.AddTag", () =>
             {
-                _articleTagDomainService.AddTag(articleId, Mapper.Map<Tag>(tag));
+               var t= _articleTagDomainService.AddTag(articleId, Mapper.Map<Tag>(tag));
+                return Mapper.Map<TagDto>(t);
             });
         }
 
@@ -74,13 +77,19 @@ namespace KB.Application.AppServices
             });
         }
 
+        private IQueryable<Article> Query(ListArticleInputDto dto)
+        {
+            return _articleDomainService.GetAll()
+                            .WhereIf(e => e.Title.Contains(dto.Title), !string.IsNullOrEmpty(dto.Title))
+                            .WhereIf(e => e.Id == dto.articleId, dto.articleId.HasValue);
+        }
+
         public IList<ArticleDto> GetList(ListArticleInputDto dto)
         {
             return Run("Article.Read", () =>
             {
-                var query = _articleDomainService.GetAll()
-                .Where(e => e.Title.Contains(dto.Title)|| string.IsNullOrEmpty(dto.Title)).OrderBy(e => e.Id)
-                ;
+                var query = Query(dto).OrderBy(e => e.Id);
+
                 return query.ProjectTo<ArticleDto>().ToList();
             });
 
@@ -89,9 +98,9 @@ namespace KB.Application.AppServices
             //return query.ProjectTo<ArticleDto>().ToList();
         }
 
-        public IList<ArticleWithTagsDto> GetListWithTags()
+        public IList<ArticleWithTagsDto> GetListWithTags(ListArticleInputDto dto)
         {
-            var query = from a in _articleDomainService.GetAll()
+            var query = from a in Query(dto)
                         from at in _articleTagDomainService.GetAll().Where(t => t.ArticleId == a.Id).DefaultIfEmpty()
                         from t in _tagDomainService.GetAll().Where(t => t.Id == at.TagId).DefaultIfEmpty()
                         select new { Article = a, Tag = t };
@@ -133,7 +142,7 @@ namespace KB.Application.AppServices
         }
 
 
-        public ArticleDto InsertWithTags(InsertArticleDto dto, IList<TagDto> tags)
+        public ArticleDto InsertWithTags(InsertArticleDto dto, IList<InsertTagDto> tags)
         {
             return Run("Article.Insert", () =>
             {
@@ -155,14 +164,21 @@ namespace KB.Application.AppServices
             //}
         }
 
-        public void RemoveTag(ArticleTagDto dto)
+        public int RemoveTag(ArticleTagDto dto)
         {
             //Permission("Article.RemoveTag");
             //_articleTagDomainService.Delete(dto.ArticleId, dto.TagId);
 
-            Run("Article.RemoveTag", () =>
+           return Run("Article.RemoveTag", () =>
             {
-                _articleTagDomainService.Delete(dto.ArticleId, dto.TagId);
+               return  _articleTagDomainService.Delete(dto.ArticleId, dto.TagId);
+            });
+        }
+        public int RemoveTag(int articleId)
+        {
+            return Run("Article.RemoveTag", () =>
+            {
+               return  _articleTagDomainService.DeleteByArticle(articleId);
             });
         }
 

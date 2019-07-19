@@ -18,7 +18,7 @@ namespace KB.Web.Host.Controllers
         {
             return Run(() =>
             {
-                var list = _articleAppService.GetListWithTags();
+                var list = _articleAppService.GetListWithTags(new ListArticleInputDto());
                 return View(list);
             });
 
@@ -63,7 +63,7 @@ namespace KB.Web.Host.Controllers
             
         }
         [HttpPost("Article/AddTag/{articleId}")]
-        public IActionResult AddTag(int articleId, TagDto dto)
+        public IActionResult AddTag(int articleId, [FromBody] InsertTagDto dto)
         {
             Run(()=>
             {

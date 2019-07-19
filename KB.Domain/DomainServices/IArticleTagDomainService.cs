@@ -16,8 +16,8 @@ namespace KB.Domain.DomainServices
         ArticleTag Insert(ArticleTag entity);
 
         void AddTags(int articleId, IList<Tag> tags);
-        void AddTag(int articleId, Tag tag);
-        void AddTag(int articleId, int tagId);
+        Tag AddTag(int articleId, Tag tag);
+        Tag AddTag(int articleId, int tagId);
 
 
         int Delete(int id);

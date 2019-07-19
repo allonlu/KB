@@ -6,6 +6,7 @@ using KB.Application.AppServices;
 using KB.Application.Dto.Articles;
 using KB.Application.Dto.Tags;
 using KB.Infrastructure.ActionResult;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace KB.Web.Host.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors]
     public class ArticlesController : ControllerBase
     {
         private IArticleAppService _articleAppService;
@@ -30,7 +32,7 @@ namespace KB.Web.Host.Controllers
                 return ActionResultHelper.Success(entity);
             });
         }
-        [HttpGet("find")]
+        [HttpGet("~/api/articles:noTags")]
         public MyActionResult<IList<ArticleDto>> GetList([FromQuery] ListArticleInputDto dto)
         {
 
@@ -42,12 +44,12 @@ namespace KB.Web.Host.Controllers
 
         }
         [HttpGet]
-        public MyActionResult<IList<ArticleWithTagsDto>> GetListWithTags()
+        public MyActionResult<IList<ArticleWithTagsDto>> GetListWithTags([FromQuery] ListArticleInputDto dto)
         {
 
             return Run(() =>
             {
-                var list = _articleAppService.GetListWithTags();
+                var list = _articleAppService.GetListWithTags(dto);
                 return ActionResultHelper.Success(list);
             });
 
@@ -63,17 +65,7 @@ namespace KB.Web.Host.Controllers
             });
 
         }
-        [HttpPost("{articleId}:AddTag")]
-        public MyActionResult<bool> AddTag(int articleId, [FromBody] TagDto dto)
-        {
-            return Run(() =>
-           {
-               _articleAppService.AddTag(articleId, dto);
 
-               return (ActionResultHelper.Success(true));
-
-           });
-        }
         [HttpDelete("{id}")]
         public MyActionResult<int> Delete(int id)
         {
@@ -84,16 +76,58 @@ namespace KB.Web.Host.Controllers
 
             });
         }
-        [HttpDelete("{articleId}:RemoveTag")]
-        public MyActionResult<bool> RemoveTag(int articleId, int tagId)
+        [HttpPost("{articleId}/tags")]
+        public MyActionResult<TagDto> AddTag(int articleId, [FromBody] InsertTagDto dto)
+        {
+            return Run(() =>
+            {
+               var t=  _articleAppService.AddTag(articleId, dto);
+
+                return (ActionResultHelper.Success(t));
+
+            });
+        }
+        [HttpPost("{articleId}/tags/{tagId}")]
+        public MyActionResult<TagDto> AddTag(int articleId, int tagId)
+
+        {
+            return Run(() =>
+            {
+                var d = _articleAppService.AddTag(new ArticleTagDto() { ArticleId = articleId, TagId = tagId });
+                return ActionResultHelper.Success(d);
+
+            });
+        }
+        [HttpDelete("{articleId}/tags/{tagId}")]
+        public MyActionResult<int> RemoveTag(int articleId, int tagId)
 
         {
            return  Run(() =>
             {
-                _articleAppService.RemoveTag(new ArticleTagDto() { ArticleId = articleId, TagId = tagId });
-                return ActionResultHelper.Success(true);
+                var d =_articleAppService.RemoveTag(new ArticleTagDto() { ArticleId = articleId, TagId = tagId });
+                return ActionResultHelper.Success(d);
 
         });
+        }
+        [HttpDelete("{articleId}/tags")]
+        public MyActionResult<int> RemoveTag(int articleId)
+        {
+            return Run(() =>
+            {
+                var d = _articleAppService.RemoveTag(articleId);
+                return ActionResultHelper.Success(d);
+
+            });
+        }
+        [HttpGet("{articleId}/tags")]
+        public MyActionResult<IList<TagDto>> GetTagsByArticle(int articleId)
+        {
+            return Run(() =>
+            {
+                var list = _articleAppService.GetTags(articleId);
+                return ActionResultHelper.Success(list);
+
+            });
         }
     }
 }

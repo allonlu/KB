@@ -9,17 +9,18 @@ namespace KB.Application.AppServices
     {
         ArticleDto Get(int id);
         IList<ArticleDto> GetList(ListArticleInputDto dto);
-        IList<ArticleWithTagsDto> GetListWithTags();
+        IList<ArticleWithTagsDto> GetListWithTags(ListArticleInputDto dto);
         int Delete(int articleId);
         ArticleDto Update(ArticleDto dto);
         ArticleDto Insert(InsertArticleDto dto);
-        ArticleDto InsertWithTags(InsertArticleDto dto, IList<TagDto> tags);
+        ArticleDto InsertWithTags(InsertArticleDto dto, IList<InsertTagDto> tags);
 
         //ArticleTag related
         IList<TagDto> GetTags(int articleId);
-        void RemoveTag(ArticleTagDto dto);
-        void AddTag(ArticleTagDto dto);
-        void AddTag(int articleId, TagDto tag);
+        int RemoveTag(ArticleTagDto dto);
+        int RemoveTag(int articleId);
+        TagDto AddTag(ArticleTagDto dto);
+        TagDto AddTag(int articleId, InsertTagDto tag);
 
     }
 }

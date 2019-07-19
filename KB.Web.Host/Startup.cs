@@ -57,6 +57,12 @@ namespace KB.Web.Host
    
             RegisterApplicationComponents(services);
 
+            services.AddCors(optiosn =>
+            {
+                optiosn.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            }
+            );
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             return services.AddWindsor(Container,
@@ -77,6 +83,9 @@ namespace KB.Web.Host
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+
+
             Container.GetFacility<AspNetCoreFacility>().RegistersMiddlewareInto(app);
 
             // Add custom middleware, do this if your middleware uses DI from Windsor
