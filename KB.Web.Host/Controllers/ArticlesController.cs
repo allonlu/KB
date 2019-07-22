@@ -26,14 +26,10 @@ namespace KB.Web.Host.Controllers
         [HttpPost]
         public MyActionResult<ArticleDto> Add([FromBody] InsertArticleDto dto)
         {
-
-            return Run(() =>
-            {
                 var entity = _articleAppService.Insert(dto);
                 return ActionResultHelper.Success(entity);
-            });
         }
-        [HttpGet("~/api/articles:noTags")]
+        [HttpGet("~/api/[controller]:noTags")]
         public MyActionResult<IList<ArticleDto>> GetList([FromQuery] ListArticleInputDto dto)
         {
 
@@ -82,7 +78,7 @@ namespace KB.Web.Host.Controllers
         {
             return Run(() =>
             {
-               var t=  _articleAppService.AddTag(articleId, dto);
+               var t=  _articleAppService.InsertTag(articleId, dto);
 
                 return (ActionResultHelper.Success(t));
 
@@ -94,7 +90,7 @@ namespace KB.Web.Host.Controllers
         {
             return Run(() =>
             {
-                var d = _articleAppService.AddTag(new ArticleTagDto() { ArticleId = articleId, TagId = tagId });
+                var d = _articleAppService.InsertTag(new ArticleTagDto() { ArticleId = articleId, TagId = tagId });
                 return ActionResultHelper.Success(d);
 
             });

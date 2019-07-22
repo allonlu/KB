@@ -12,6 +12,7 @@ namespace KB.EntityFramework
     /// </summary>
     public class InnerUnitOfWork : IUnitOfWork
     {
+        private int _siteId = 0;
        
         public void Complete()
         {
@@ -24,7 +25,10 @@ namespace KB.EntityFramework
 
         public void SetSiteId(int siteId)
         {
-           
+            _siteId = 0;
+        }
+        public int GetSiteId() {
+            return _siteId;
         }
     }
 }

@@ -20,5 +20,6 @@ namespace KB.Domain.Repositories
         bool Exists(Expression<Func<TEntity, bool>> predicate);
 
 
+
     }
 }

@@ -32,7 +32,7 @@ namespace KB.Application.AppServices
 
 
         [Permission("Article.Tag.Add")]
-        public TagDto AddTag(ArticleTagDto dto)
+        public TagDto InsertTag(ArticleTagDto dto)
         {
 
                 var t = _articleTagDomainService.Insert(Mapper.Map<ArticleTag>(dto));
@@ -40,7 +40,7 @@ namespace KB.Application.AppServices
            
         }
         [Permission("Article.Tag.Add")]
-        public TagDto AddTag(int articleId, InsertTagDto tag)
+        public TagDto InsertTag(int articleId, InsertTagDto tag)
         {
 
                var t= _articleTagDomainService.AddTag(articleId, Mapper.Map<Tag>(tag));

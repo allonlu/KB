@@ -6,15 +6,12 @@ namespace KB.Domain.Entities
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    public class Tag : IEntity
+    public class Tag : BaseSiteEntity
     {
- 
-        [Key]
-        public int Id { get;  set; }
-
         [Required]
         [MaxLength(Constant.MaxNameLength)]
         public string Name { get; set; }
+        public virtual Article Article { get; set; }
 
     }
 }

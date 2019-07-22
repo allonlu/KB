@@ -57,7 +57,7 @@ namespace KB.Web.Host.Controllers
         {
             Run(()=>
             {
-                _articleAppService.AddTag(articleId, dto);
+                _articleAppService.InsertTag(articleId, dto);
 
             });
             return RedirectToAction("Index");

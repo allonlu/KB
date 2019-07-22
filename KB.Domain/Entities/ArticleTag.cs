@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KB.Domain.Entities
 {
-    public class ArticleTag : IEntity
+    public class ArticleTag : IEntity,IBelongToSite
     {
         [Key]
         public int Id { get; set; }

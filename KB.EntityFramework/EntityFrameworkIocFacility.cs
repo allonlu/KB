@@ -17,10 +17,12 @@ namespace KB.EntityFramework
             Kernel.Register(
 
 
+                //Component.For(typeof(DbContext))
+                //        .UsingFactoryMethod(k => { return DbContextFactory.Create(k); })
+                //        .LifestyleScoped(),
                 Component.For(typeof(DbContext))
-                        .UsingFactoryMethod(k => { return DbContextFactory.Create(k); })
-                        .LifestyleScoped(),
-
+                       .ImplementedBy(typeof(KBDataContext))
+                       .LifestyleScoped(),
                 Component.For(typeof(IRepository<>))
                        .ImplementedBy(typeof(EFRepository<>))
                        .LifestyleScoped(),

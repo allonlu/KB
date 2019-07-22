@@ -19,8 +19,8 @@ namespace KB.Application.AppServices
         IList<TagDto> GetTags(int articleId);
         int RemoveTag(ArticleTagDto dto);
         int RemoveTag(int articleId);
-        TagDto AddTag(ArticleTagDto dto);
-        TagDto AddTag(int articleId, InsertTagDto tag);
+        TagDto InsertTag(ArticleTagDto dto);
+        TagDto InsertTag(int articleId, InsertTagDto tag);
 
     }
 }

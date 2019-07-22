@@ -1,8 +1,11 @@
 
 using KB.Domain.Entities;
+using KB.Infrastructure.Ioc;
+using KB.Infrastructure.Runtime.Session;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Linq;
 
 namespace KB.EntityFramework
 {
@@ -10,10 +13,12 @@ namespace KB.EntityFramework
     public class KBDataContext : DbContext
     {
         private IConfiguration _configuration;
-        public Guid Key { get; private set; }
+        [Mandatory]
+        public ISession Session { get;  set; }
+
+
         public KBDataContext()
         {
-            Key = Guid.NewGuid();
         }
         //public KBDataContext(IConfiguration configuration)
         //{
@@ -24,15 +29,36 @@ namespace KB.EntityFramework
         public virtual DbSet<ArticleTag> ArticleTags { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
 
+        /// <summary>
+        /// 自动更新SiteId
+        /// </summary>
+        /// <returns></returns>
+        public override int SaveChanges()
+        {
+            foreach (var entry in ChangeTracker.Entries().ToList())
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    if(entry.Entity is IMustHaveSiteId)
+                    {
+                        ((IMustHaveSiteId)entry.Entity).SiteId = Session.GetSiteId();
+                    }
+                }
+
+            }
+            return base.SaveChanges();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.;Database=KBTest;User=sa;Password=Aa000000;");
+            optionsBuilder.UseSqlServer(@"Server=.;Database=KBTest1;User=sa;Password=Aa000000;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
             modelBuilder.Entity<Article>()
+                .HasQueryFilter(a=>a.SiteId==Session.GetSiteId())
                 .ToTable("t_KB_Article")
                 .HasKey(t=>t.Id);
 
@@ -40,6 +66,7 @@ namespace KB.EntityFramework
                   entity =>
                   {
                       entity.ToTable("t_KB_Tag")
+                            .HasQueryFilter(a => a.SiteId == Session.GetSiteId())
                             .HasKey(t => t.Id);
 
                       entity.HasIndex(t => t.Name).IsUnique();

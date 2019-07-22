@@ -44,5 +44,10 @@ namespace KB.EntityFramework
 
             return _outerUow;
         }
+
+        public int GetSiteId()
+        {
+            return _outerUow.GetSiteId();
+        }
     }
 }

@@ -27,14 +27,10 @@ namespace KB.Domain.DomainServices
 
         public Tag AddTag(int articleId, Tag tag)
         {
-            using (var uow = _unitOfWorkManager.Begin())
-            {
-     
+         
                var t=  AddTag(ValidateArticle(articleId), tag);
-
-                uow.Complete();
                 return t;
-            }
+            
         }
         private Article ValidateArticle(int articleId)
         {
