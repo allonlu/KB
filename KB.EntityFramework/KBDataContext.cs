@@ -58,9 +58,9 @@ namespace KB.EntityFramework
         {
 
             modelBuilder.Entity<Article>()
-                .HasQueryFilter(a=>a.SiteId==Session.GetSiteId())
+                .HasQueryFilter(a => a.SiteId == Session.GetSiteId())
                 .ToTable("t_KB_Article")
-                .HasKey(t=>t.Id);
+                .HasKey(t => t.Id);
 
             modelBuilder.Entity<Tag>(
                   entity =>
@@ -68,6 +68,8 @@ namespace KB.EntityFramework
                       entity.ToTable("t_KB_Tag")
                             .HasQueryFilter(a => a.SiteId == Session.GetSiteId())
                             .HasKey(t => t.Id);
+
+            
 
                       entity.HasIndex(t => t.Name).IsUnique();
                   }
