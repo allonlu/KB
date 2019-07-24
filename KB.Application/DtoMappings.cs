@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using KB.Application.Dto.Articles;
+using KB.Application.Dto.Categories;
 using KB.Application.Dto.Tags;
 using KB.Domain.Entities;
 
@@ -12,16 +13,21 @@ namespace KB.Application
             // Article
             CreateMap<Article, ArticleDto>();
             CreateMap<ArticleDto, Article>();
-            CreateMap<InsertArticleDto, Article>();
+            CreateMap<AddArticleDto, Article>();
 
-      
 
             // Tag
             CreateMap<Tag, TagDto>();
             CreateMap<TagDto, Tag>();
-            CreateMap<InsertTagDto, Tag>();
+            CreateMap<AddTagDto, Tag>();
 
             CreateMap<ArticleTagDto, ArticleTag>();
+
+            CreateMap<Category, CategoryDto>();
+            CreateMap<CategoryDto, Category>();
+            CreateMap<AddCategoryDto, Category>();
+
+
         }
     }
 }

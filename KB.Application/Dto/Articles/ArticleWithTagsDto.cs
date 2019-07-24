@@ -1,4 +1,5 @@
 ﻿using KB.Application.Dto.Tags;
+using KB.Domain.Entities;
 using KB.Infrastructure.Constant;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,18 @@ namespace KB.Application.Dto.Articles
 {
    public class ArticleWithTagsDto
     {
+        public ArticleWithTagsDto()
+        {
+            Tags = new List<TagDto>();
+        }
         public int Id { get; set; }
 
         public string Title { get; set; }
 
         public string Description { get; set; }
+
+        public ArticleStateEnum State { get; set; }
+
         public IList<TagDto> Tags { get; set; }
     }
 }

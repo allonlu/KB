@@ -23,9 +23,9 @@ namespace KB.EntityFramework
             _dbContext = dbContext;
         }
 
-        public IQueryable<TEntity> GetAll()
+        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dataSet;
+            return _dataSet.Where(predicate);
         }
 
         public TEntity Get(int id)
@@ -70,7 +70,7 @@ namespace KB.EntityFramework
         public int Delete(Expression<Func<TEntity, bool>> predicate)
         {
            
-            foreach (var entity in GetAll().Where(predicate).ToList())
+            foreach (var entity in GetAll(predicate).ToList())
             {
                Delete(entity);
 
@@ -81,7 +81,7 @@ namespace KB.EntityFramework
 
         public bool Exists(Expression<Func<TEntity, bool>> predicate)
         {
-            return GetAll().Any(predicate);
+            return GetAll(predicate).Any();
         }
     }
     }

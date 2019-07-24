@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using KB.Domain.Entities;
 
 namespace KB.Domain.DomainServices
@@ -6,7 +8,7 @@ namespace KB.Domain.DomainServices
     public interface ITagDomainService : IDomainService
     {
         Tag Get(int tagId);
-        IQueryable<Tag> GetAll();
+        IQueryable<Tag> GetAll(Expression<Func<Tag, bool>> predicate);
         Tag Insert(Tag entity);
         Tag Update(Tag entity);
         int Delete(int tagId);

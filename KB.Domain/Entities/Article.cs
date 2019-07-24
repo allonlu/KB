@@ -16,8 +16,9 @@ namespace KB.Domain.Entities
         [MaxLength(Constant.MaxDescLength)]
         public string Description { get; set; }
         public ArticleStateEnum State { get; set; }
-        public virtual ICollection<ArticleTag> ArticleTags { get; set; }
-        public virtual Category Category { get; set; }
+        public int CategoryId { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
+        //public virtual Category Category { get; set; }
 
     }
 }

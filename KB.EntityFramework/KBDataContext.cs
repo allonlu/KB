@@ -88,6 +88,14 @@ namespace KB.EntityFramework
 
                   }
                 );
+       modelBuilder.Entity<Category>(
+       entity =>
+       {
+           entity.ToTable("t_KB_Category")
+                 .HasKey(t => t.Id);
+
+       }
+     );
         }
     }
 }

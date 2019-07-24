@@ -6,8 +6,8 @@ namespace KB.Application.AppServices
 {
     public interface ITagAppService: IAppService { 
         TagDto Get(int tagId);
-        IList<TagDto> GetList(ListTagInputDto dto);
-        TagDto Insert(InsertTagDto dto);
+        IList<TagDto> GetList(QueryTagInput dto);
+        TagDto Insert(AddTagDto dto);
         TagDto Update(TagDto dto);
         int Delete(int tagId);
 

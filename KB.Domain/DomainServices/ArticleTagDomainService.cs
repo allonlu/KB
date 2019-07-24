@@ -1,27 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using KB.Domain.Entities;
 using KB.Domain.Repositories;
 using KB.Domain.Uow;
+using KB.Infrastructure.Exceptions;
+using KB.Infrastructure.Ioc;
 
 namespace KB.Domain.DomainServices
 {
     public class ArticleTagDomainService :DomainServiceBase, IArticleTagDomainService
     {
         public IRepository<ArticleTag> _repository;
-        public IArticleDomainService _articleDomainService;
-        public ITagDomainService _tagDomainService;
+        [Mandatory]
+        public IArticleDomainService ArticleDomainService { get; set; }
+        [Mandatory]
+        public ITagDomainService TagDomainService { get; set; }
         public ArticleTagDomainService(IRepository<ArticleTag> repository,
-                                        IArticleDomainService articleDomainService,
-                                        ITagDomainService tagDomainService,
                                         IUnitOfWorkManager unitOfWorkManager):base(unitOfWorkManager)
         {
             _repository = repository;
-            _articleDomainService =articleDomainService;
-            _tagDomainService = tagDomainService;
             _unitOfWorkManager = unitOfWorkManager;
         }
 
@@ -34,10 +35,10 @@ namespace KB.Domain.DomainServices
         }
         private Article ValidateArticle(int articleId)
         {
-            ///数据库上锁
-            var article = _articleDomainService.Get(articleId);
+          
+            var article = ArticleDomainService.Get(articleId);
             if (article == null)
-                throw new Exception("Article资源不存在！");
+                throw new EntityNotFoundException(210010) { Id = articleId,EntityType=typeof(Article)};
             return article;
 
         }
@@ -45,17 +46,17 @@ namespace KB.Domain.DomainServices
         {
             if(_repository.Exists(e=>e.ArticleId==articleId && e.TagId == tagId))
             {
-                throw new Exception("关系已经存在，不允许重复添加！");
+                throw new MyException(200009,"关系已经存在，不允许重复添加！");
             }
              _repository.Insert(new ArticleTag() { ArticleId = articleId, TagId = tagId });
-            return _tagDomainService.Get(tagId);
+            return TagDomainService.Get(tagId);
         }
 
         public void AddTags(int articleId, IList<Tag> tags)
         {
             using (var uow = _unitOfWorkManager.Begin())
             {
-                ///数据库上锁
+             
                 var article = ValidateArticle(articleId);
 
                 foreach (var t in tags)
@@ -68,7 +69,7 @@ namespace KB.Domain.DomainServices
         }
         private Tag AddTag(Article article,Tag tag)
         {
-            var newTag = _tagDomainService.Insert(tag);
+            var newTag = TagDomainService.Insert(tag);
 
             return  AddTag(article.Id, newTag.Id);
 
@@ -94,23 +95,21 @@ namespace KB.Domain.DomainServices
 
         public ArticleTag Get(int articleId, int tagId)
         {
-            return _repository.GetAll().FirstOrDefault(e => e.ArticleId == articleId && e.TagId == tagId);
+            return _repository.GetAll(e => e.ArticleId == articleId && e.TagId == tagId).FirstOrDefault();
         }
 
         public IQueryable<Article> GetArticles(int tagId)
         {
-            var query = from at in _repository.GetAll()
-                        join t in _articleDomainService.GetAll() on at.ArticleId equals t.Id
-                        where at.TagId == tagId
+            var query = from at in _repository.GetAll(e=>e.TagId == tagId)
+                        join t in ArticleDomainService.GetAll(_=>true) on at.ArticleId equals t.Id
                         select t;
             return query;
         }
 
         public IQueryable<Tag> GetTags(int articleId)
         {
-            var query = from at in _repository.GetAll()
-                        join t in _tagDomainService.GetAll() on at.TagId equals t.Id
-                        where at.ArticleId == articleId
+            var query = from at in _repository.GetAll(e => e.ArticleId == articleId)
+                        join t in TagDomainService.GetAll(_=>true) on at.TagId equals t.Id
                         select t;
             return query;
         }
@@ -120,9 +119,9 @@ namespace KB.Domain.DomainServices
             return _repository.Insert(entity);
         }
 
-        public IQueryable<ArticleTag> GetAll()
+        public IQueryable<ArticleTag> GetAll(Expression<Func<ArticleTag,bool>> predicate)
         {
-            return _repository.GetAll();
+            return _repository.GetAll(predicate);
 
         }
 
@@ -135,5 +134,7 @@ namespace KB.Domain.DomainServices
         {
             return _repository.Delete(e => e.TagId == tagId);
         }
+
+
     }
 }

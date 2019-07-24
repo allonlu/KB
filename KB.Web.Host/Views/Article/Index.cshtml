@@ -1,44 +1,45 @@
 ﻿@using KB.Application.Dto.Articles
 @using System.Collections.Generic
 @model IList<ArticleWithTagsDto>
-    @{
-        ViewBag.Title = "Article";
+@{
+    ViewBag.Title = "Article";
+}
+<h2>Article</h2>
+@Html.ActionLink("New Article", "Add", new { }, new { Class = "btn btn-primary", Title = "Create a new artile" })
+@Html.ActionLink("New Category", "Add","Category", new { }, new { Class = "btn btn-primary", Title = "Create a new artile" })
+<table class="table table-bordered">
+
+    @foreach (ArticleWithTagsDto dto in Model)
+    {
+        <tr>
+            <td>@dto.Id</td>
+            <td>@dto.Title</td>
+            <td>@dto.Description</td>
+            <td>@dto.Tags.Count</td>
+            <td>
+                <div>
+                    @foreach (var t in dto.Tags)
+                    {
+                        @if (t != null)
+                        {
+
+                            @Html.ActionLink(t.Name, "RemoveTag", new { articleId = dto.Id, tagId = t.Id }, new { Class = "badge badge-primary", Title = "Click to delete the tag" })
+                        }
+                    }
+                </div>
+
+                <form class="form-inline" method="post" action="Article/AddTag/@dto.Id">
+                    <input type="text" class="form-control  form-control-sm" name="Name" />
+                    <input class="btn btn-info btn-sm" type="submit" value="AddTag" />
+                </form>
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { Id = dto.Id }, new { Class = "btn btn-danger" })
+            </td>
+
+        </tr>
     }
-    <h2>Article</h2>
-     @Html.ActionLink("New", "Add",new {},new {Class="btn btn-primary",Title="Create a new artile"})
-            <table class="table table-bordered">
 
-                @foreach (ArticleWithTagsDto dto in Model)
-                {
-                    <tr>
-                        <td>@dto.Id</td>
-                        <td>@dto.Title</td>
-                        <td>@dto.Description</td>
-                        <td>@dto.Tags.Count</td>
-                        <td>
-                            <div>
-                               @foreach (var t in dto.Tags)
-                               {
-                                    @if (t != null)
-                                    {
-
-                                      @Html.ActionLink(t.Name, "RemoveTag", new { articleId = dto.Id, tagId = t.Id }, new { Class = "badge badge-primary",Title="Click to delete the tag" })
-                                   }
-                               }
-                            </div>
-                     
-                            <form class="form-inline" method="post" action="Article/AddTag/@dto.Id">
-                                <input type="text" class="form-control  form-control-sm" name="Name"/>
-                                <input class="btn btn-info btn-sm" type="submit" value="AddTag" />
-                            </form>
-                        </td>
-                        <td>
-                            @Html.ActionLink("Delete", "Delete",new {Id=dto.Id },new {Class="btn btn-danger"})
-                        </td>
-
-                    </tr>
-                }
-
-                </table>
+</table>
 
 

@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using KB.Domain.Uow;
 using KB.Infrastructure.Extension;
 using KB.Infrastructure.Runtime.Authorization;
+using System.Linq.Expressions;
+using System;
 
 namespace KB.Application.AppServices
 {
@@ -32,7 +34,7 @@ namespace KB.Application.AppServices
 
 
         [Permission("Article.Tag.Add")]
-        public TagDto InsertTag(ArticleTagDto dto)
+        public TagDto AddTag(ArticleTagDto dto)
         {
 
                 var t = _articleTagDomainService.Insert(Mapper.Map<ArticleTag>(dto));
@@ -40,7 +42,7 @@ namespace KB.Application.AppServices
            
         }
         [Permission("Article.Tag.Add")]
-        public TagDto InsertTag(int articleId, InsertTagDto tag)
+        public TagDto AddTag(int articleId, AddTagDto tag)
         {
 
                var t= _articleTagDomainService.AddTag(articleId, Mapper.Map<Tag>(tag));
@@ -65,14 +67,29 @@ namespace KB.Application.AppServices
           
         }
 
-        private IQueryable<Article> Query(ListArticleInputDto dto)
+        private IQueryable<Article> Query(QueryArticleInput dto)
         {
-            return _articleDomainService.GetAll()
-                            .WhereIf(e => e.Title.Contains(dto.Title), !string.IsNullOrEmpty(dto.Title))
-                            .WhereIf(e => e.Id == dto.articleId, dto.articleId.HasValue);
+            Expression<Func<Article, bool>> expression=null;
+            Expression<Func<Article, bool>> expression1;
+
+            if (!string.IsNullOrEmpty(dto.Title))
+            {
+                expression = e => e.Title.Contains(dto.Title);
+            }
+            if (dto.articleId.HasValue)
+            {
+
+                expression1 = e => e.Id == dto.articleId;
+                if (expression == null)
+                    expression = expression1;
+                else
+                    expression = LambdaExpression.Lambda<Func<Article, bool>>(Expression.And(expression, expression1));
+            }
+            return _articleDomainService.GetAll(expression);
+                            
         }
         [Permission("Article.Read")]
-        public IList<ArticleDto> GetList(ListArticleInputDto dto)
+        public IList<ArticleDto> GetList(QueryArticleInput dto)
         {
             
                 var query = Query(dto).OrderBy(e => e.Id);
@@ -82,11 +99,11 @@ namespace KB.Application.AppServices
 
         }
         [Permission("Article.Read")]
-        public IList<ArticleWithTagsDto> GetListWithTags(ListArticleInputDto dto)
+        public IList<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto)
         {
             var query = from a in Query(dto)
-                        from at in _articleTagDomainService.GetAll().Where(t => t.ArticleId == a.Id).DefaultIfEmpty()
-                        from t in _tagDomainService.GetAll().Where(t => t.Id == at.TagId).DefaultIfEmpty()
+                        from at in _articleTagDomainService.GetAll(t => t.ArticleId == a.Id).DefaultIfEmpty()
+                        from t in _tagDomainService.GetAll(t => t.Id == at.TagId).DefaultIfEmpty()
                         select new { Article = a, Tag = t };
 
             var query1 = from t in query
@@ -96,8 +113,9 @@ namespace KB.Application.AppServices
                              Id = g.Key.Id,
                              Title = g.Key.Title,
                              Description = g.Key.Description,
-                             Tags = g.Where(e=>e.Tag!=null).Select(t => Mapper.Map<TagDto>(t.Tag)).ToList()
-                   };
+                             Tags = g.Where(e => e.Tag != null).Select(t => Mapper.Map<TagDto>(t.Tag)).ToList() ?? new List<TagDto>()
+                         };
+
             return query1.ToList();
         }
         [Permission("Article.Read")]
@@ -108,32 +126,32 @@ namespace KB.Application.AppServices
            
         }
         [Permission("Article.Insert")]
-        public ArticleDto Insert(InsertArticleDto dto)
+        public ArticleDto Add(AddArticleDto dto)
         {
            
-                var entity = _articleDomainService.Insert(Mapper.Map<Article>(dto));
+                var entity = _articleDomainService.Add(Mapper.Map<Article>(dto));
                 return Mapper.Map<ArticleDto>(entity);
           
         }
 
         [Permission("Article.Tag.Insert")]
-        public ArticleDto InsertWithTags(InsertArticleDto dto, IList<InsertTagDto> tags)
+        public ArticleDto AddWithTags(AddArticleDto dto, IList<AddTagDto> tags)
         {
           
-                var entity = _articleDomainService.Insert(Mapper.Map<Article>(dto));
+                var entity = _articleDomainService.Add(Mapper.Map<Article>(dto));
                 _articleTagDomainService.AddTags(entity.Id, Mapper.Map<IList<Tag>>(tags));
                 return Mapper.Map<ArticleDto>(entity);
            
 
         }
         [Permission("Article.Tag.Remove")]
-        public int RemoveTag(ArticleTagDto dto)
+        public int DeleteTag(ArticleTagDto dto)
         {
              return  _articleTagDomainService.Delete(dto.ArticleId, dto.TagId);
         }
 
         [Permission("Article.Tag.Remove")]
-        public int RemoveTag(int articleId)
+        public int DeleteTag(int articleId)
         {
            
             return  _articleTagDomainService.DeleteByArticle(articleId);

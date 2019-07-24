@@ -31,7 +31,7 @@ namespace KB.EntityFramework
          
         }
 
-        public EventHandler Disposed;
+        public event  EventHandler Disposed;
         public void Complete()
         {
             _transaction.Commit();

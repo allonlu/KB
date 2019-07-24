@@ -1,5 +1,6 @@
 ﻿using Castle.DynamicProxy;
 using KB.Domain.Uow;
+using KB.Infrastructure.Exceptions;
 using KB.Infrastructure.Ioc;
 using KB.Infrastructure.Runtime.Authorization;
 using KB.Infrastructure.Runtime.Logging;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Transactions;
 
 namespace KB.Application.Interceptor
 {
@@ -37,22 +39,35 @@ namespace KB.Application.Interceptor
         {
             try
             {
+                var method = GetMethod(invocation);
 
-                CheckPermission(GetMethod(invocation));
+                CheckPermission(method);
 
-                using (var uow = _unitOfWorkMananger.Begin())
+                using (var uow = _unitOfWorkMananger.Begin(GetIsolationLevel(method)))
                 {
 
                     uow.SetSiteId(Session.GetSiteId());
                     invocation.Proceed();
                     uow.Complete();
-            }
+                }
 
             }catch(Exception e)
             {
                 Logger.Error(e.Message);
                 throw e;
             }
+        }
+        private IsolationLevel GetIsolationLevel(MethodInfo methodInfo)
+        {
+            switch (methodInfo.Name.Substring(0, 3))
+            {
+                case "Add":
+                    return IsolationLevel.Serializable;
+                case "Get":
+                    return IsolationLevel.RepeatableRead;
+            }
+
+            return IsolationLevel.ReadCommitted;
         }
         private MethodInfo GetMethod(IInvocation invocation)
         {
@@ -69,13 +84,13 @@ namespace KB.Application.Interceptor
         {
             var attrs = method.GetCustomAttributes(true).OfType<PermissionAttribute>().ToArray();
             if (attrs.Length == 0) {
-                throw new Exception("没有配置权限！");
+                throw new AuthorizationException(100010,"没有配置权限！");
             } 
             var permissionName = attrs[0].Name;
             if (!PermissionChecker.IsGranted(Session.GetAgentId(), permissionName))
             {
                 Logger.Info($"SiteId:{Session.GetSiteId()},AgentId:{Session.GetAgentId()},Type:PermissionCheckFail,Permission:{permissionName} ");
-                throw new Exception("没有权限！");
+                throw new AuthorizationException(100011, "没有权限！");
             }
             Logger.Info($"SiteId:{Session.GetSiteId()},AgentId:{Session.GetAgentId()},Type:PermissionCheckSuccess,Permission:{permissionName} ");
         }

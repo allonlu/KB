@@ -32,15 +32,14 @@ namespace KB.Application.AppServices
             return Mapper.Map<TagDto>(_tagDomainService.Get(tagId));
         }
         [Permission("Tag.Read")]
-        public IList<TagDto> GetList(ListTagInputDto dto)
+        public IList<TagDto> GetList(QueryTagInput dto)
         {
-            return _tagDomainService.GetAll()
-                        .Where(t => t.Name.Contains(dto.Name))
+            return _tagDomainService.GetAll(t => t.Name.Contains(dto.Name))
                         .ProjectTo<TagDto>()
                         .ToList();
         }
         [Permission("Tag.Insert")]
-        public TagDto Insert(InsertTagDto dto)
+        public TagDto Insert(AddTagDto dto)
         {
             var entity = _tagDomainService.Insert(Mapper.Map<Tag>(dto));
             return Mapper.Map<TagDto>(entity);

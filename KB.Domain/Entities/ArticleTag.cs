@@ -10,14 +10,14 @@ namespace KB.Domain.Entities
         [Required]
         public int ArticleId { get; set; }
 
-        [ForeignKey(nameof(ArticleId))]
-        public virtual Article Article { get; set; }
+        //[ForeignKey(nameof(ArticleId))]
+        //public virtual Article Article { get; set; }
 
         [Required]
         public int TagId { get; set; }
 
-        [ForeignKey(nameof(TagId))]
-        public virtual Tag Tag { get; set; }
+        //[ForeignKey(nameof(TagId))]
+        //public virtual Tag Tag { get; set; }
 
 
     }

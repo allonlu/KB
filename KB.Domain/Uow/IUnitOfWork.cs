@@ -8,6 +8,8 @@ namespace KB.Domain.Uow
 {
     public interface IUnitOfWork:IDisposable
     {
+
+        event EventHandler Disposed;
         void SetSiteId(int siteId);
         int GetSiteId();
         void Complete();

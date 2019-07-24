@@ -6,13 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KB.Application.Dto.Articles
+namespace KB.Application.Dto.Tags
 {
-   public class ListArticleInputDto
+    public class QueryTagInput
     {
-        public int? articleId { get; set; }
-
         [MaxLength(Constant.MaxNameLength)]
-        public string Title { get; set; }
+        public string Name { get; set; }
     }
 }

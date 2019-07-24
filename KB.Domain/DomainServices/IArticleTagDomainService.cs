@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace KB.Domain.DomainServices
 {
     public interface IArticleTagDomainService : IDomainService
     {
-        IQueryable<ArticleTag> GetAll();
+        IQueryable<ArticleTag> GetAll(Expression<Func<ArticleTag, bool>> predicate);
         ArticleTag Get(int articleId, int tagId);
         IQueryable<Tag> GetTags(int articleId);
         IQueryable<Article> GetArticles(int tagId);

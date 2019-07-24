@@ -1,4 +1,5 @@
-﻿using KB.Infrastructure.Constant;
+﻿using KB.Domain.Entities;
+using KB.Infrastructure.Constant;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace KB.Application.Dto.Articles
 {
-    public class InsertArticleDto
+    public class AddArticleDto
     {
         [Required]
         [MaxLength(Constant.MaxNameLength)]
@@ -16,5 +17,10 @@ namespace KB.Application.Dto.Articles
 
         [MaxLength(Constant.MaxNameLength)]
         public string Description { get; set; }
+
+        [Required]
+        public int CategoryId { get; set; }
+
+        public ArticleStateEnum State { get; set; }
     }
 }

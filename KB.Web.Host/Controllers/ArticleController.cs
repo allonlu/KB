@@ -3,24 +3,28 @@ using KB.Application.Dto.Articles;
 using KB.Application.Dto.Tags;
 using KB.Infrastructure.ActionResult;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Linq;
 
 namespace KB.Web.Host.Controllers
 {
     public class ArticleController : ControllerBase
     {
         private IArticleAppService _articleAppService;
-        public ArticleController(IArticleAppService articleAppService)
+        private readonly ICategoryAppService _categoryAppService;
+
+        public ArticleController(IArticleAppService articleAppService,ICategoryAppService categoryAppService)
         {
-            _articleAppService = articleAppService;
+            this._articleAppService = articleAppService;
+            this._categoryAppService = categoryAppService;
         }
         // GET: Article
         public IActionResult Index()
         {
-            return Run(() =>
-            {
-                var list = _articleAppService.GetListWithTags(new ListArticleInputDto());
+            
+                var list = _articleAppService.GetListWithTags(new QueryArticleInput());
                 return View(list);
-            });
+            
 
 
         }
@@ -28,66 +32,51 @@ namespace KB.Web.Host.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            return View();
+            var selelctItems = _categoryAppService.GetList().Select(e =>new SelectListItem(e.Name,e.Id.ToString())).AsEnumerable();
+
+  
+            return View(selelctItems);
         }
         [HttpPost]
-        public IActionResult Add(InsertArticleDto dto)
+        public IActionResult Add(AddArticleDto dto)
         {
            
 
-            return Run(() =>
-            {
-                var list = _articleAppService.Insert(dto);
+                var list = _articleAppService.Add(dto);
                 return RedirectToAction("Index");
-            });
+           
         }
-        public IActionResult GetList(ListArticleInputDto dto)
+        public IActionResult GetList(QueryArticleInput dto)
         {
-
-
-            return Run(() =>
-            {
                 var list = _articleAppService.GetList(dto);
                 return Json(ActionResultHelper.Success(list));
-            });
-            
         }
         [HttpPost("Article/AddTag/{articleId}")]
-        public IActionResult AddTag(int articleId, InsertTagDto dto)
+        public IActionResult AddTag(int articleId, AddTagDto dto)
         {
-            Run(()=>
-            {
-                _articleAppService.InsertTag(articleId, dto);
-
-            });
+          
+            _articleAppService.AddTag(articleId, dto);
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
         {
-            Run(() =>
-            {
-                _articleAppService.Delete(id);
-
-            });
+       
+            _articleAppService.Delete(id);
             return RedirectToAction("Index");
         }
         public IActionResult RemoveTag(ArticleTagDto dto)
                 
         {
-            Run(()=>
-            {
-                _articleAppService.RemoveTag(dto);
-
-            });
+            
+            _articleAppService.DeleteTag(dto);
             return RedirectToAction("Index");
         }
         public IActionResult Get(int id)
         {
-            return Run(() =>
-            {
+         
                var article = _articleAppService.Get(id);
                return Json(ActionResultHelper.Success(article));
-            });
+            
         }
     }
 }

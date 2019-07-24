@@ -24,13 +24,13 @@ namespace KB.Web.Host.Controllers
             _articleAppService = articleAppService;
         }
         [HttpPost]
-        public MyActionResult<ArticleDto> Add([FromBody] InsertArticleDto dto)
+        public MyActionResult<ArticleDto> Add([FromBody] AddArticleDto dto)
         {
-                var entity = _articleAppService.Insert(dto);
+                var entity = _articleAppService.Add(dto);
                 return ActionResultHelper.Success(entity);
         }
         [HttpGet("~/api/[controller]:noTags")]
-        public MyActionResult<IList<ArticleDto>> GetList([FromQuery] ListArticleInputDto dto)
+        public MyActionResult<IList<ArticleDto>> GetList([FromQuery] QueryArticleInput dto)
         {
 
             return Run(() =>
@@ -41,7 +41,7 @@ namespace KB.Web.Host.Controllers
 
         }
         [HttpGet]
-        public MyActionResult<IList<ArticleWithTagsDto>> GetListWithTags([FromQuery] ListArticleInputDto dto)
+        public MyActionResult<IList<ArticleWithTagsDto>> GetListWithTags([FromQuery] QueryArticleInput dto)
         {
 
             return Run(() =>
@@ -74,11 +74,11 @@ namespace KB.Web.Host.Controllers
             });
         }
         [HttpPost("{articleId}/tags")]
-        public MyActionResult<TagDto> AddTag(int articleId, [FromBody] InsertTagDto dto)
+        public MyActionResult<TagDto> AddTag(int articleId, [FromBody] AddTagDto dto)
         {
             return Run(() =>
             {
-               var t=  _articleAppService.InsertTag(articleId, dto);
+               var t=  _articleAppService.AddTag(articleId, dto);
 
                 return (ActionResultHelper.Success(t));
 
@@ -90,7 +90,7 @@ namespace KB.Web.Host.Controllers
         {
             return Run(() =>
             {
-                var d = _articleAppService.InsertTag(new ArticleTagDto() { ArticleId = articleId, TagId = tagId });
+                var d = _articleAppService.AddTag(new ArticleTagDto() { ArticleId = articleId, TagId = tagId });
                 return ActionResultHelper.Success(d);
 
             });
@@ -101,7 +101,7 @@ namespace KB.Web.Host.Controllers
         {
            return  Run(() =>
             {
-                var d =_articleAppService.RemoveTag(new ArticleTagDto() { ArticleId = articleId, TagId = tagId });
+                var d =_articleAppService.DeleteTag(new ArticleTagDto() { ArticleId = articleId, TagId = tagId });
                 return ActionResultHelper.Success(d);
 
         });
@@ -111,7 +111,7 @@ namespace KB.Web.Host.Controllers
         {
             return Run(() =>
             {
-                var d = _articleAppService.RemoveTag(articleId);
+                var d = _articleAppService.DeleteTag(articleId);
                 return ActionResultHelper.Success(d);
 
             });

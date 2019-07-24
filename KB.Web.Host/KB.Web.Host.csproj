@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KB.Application\KB.Application.csproj" />
+    <ProjectReference Include="..\KB.Dapper\KB.Dapper.csproj" />
     <ProjectReference Include="..\KB.EntityFramework\KB.EntityFramework.csproj" />
     <ProjectReference Include="..\KB.Infrastructure\KB.Infrastructure.csproj" />
   </ItemGroup>

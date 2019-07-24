@@ -9,7 +9,7 @@ namespace KB.Domain.Repositories
     public interface IRepository<TEntity> where TEntity:IEntity
     {
         TEntity Get(int id);
-        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate);
         TEntity Insert(TEntity entity);
         TEntity Update(TEntity entity);
         int Delete(int id);

@@ -17,10 +17,9 @@ namespace KB.Domain.Entities
         public CategoryStateEnum State { get; set; }
 
 
-
         public bool IsDeleted { get; set; }
 
-        public virtual ICollection<Article> Articles { get; set; }
+        //public virtual ICollection<Article> Articles { get; set; }
 
 
     }

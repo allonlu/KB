@@ -3,6 +3,7 @@ using KB.Domain.Repositories;
 using KB.Domain.Uow;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace KB.Domain.DomainServices
 {
@@ -33,15 +34,15 @@ namespace KB.Domain.DomainServices
             return _repository.Get(tagId);
         }
 
-        public IQueryable<Tag> GetAll()
+        public IQueryable<Tag> GetAll(Expression<Func<Tag, bool>> predicate)
         {
-            return _repository.GetAll();
+            return _repository.GetAll(predicate);
         }
 
         public Tag Insert(Tag entity)
         {
             //如果已经存在的名字，则直接使用这个实体，不创建。
-            var e = _repository.GetAll().FirstOrDefault(t => t.Name == entity.Name);
+            var e = _repository.GetAll(t => t.Name == entity.Name).FirstOrDefault();
             if (e != null)
                 return e;
 

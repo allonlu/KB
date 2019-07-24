@@ -1,17 +1,19 @@
-﻿using System;
+﻿using KB.Domain.Entities;
+using KB.Infrastructure.Constant;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using KB.Infrastructure.Constant;
 
-namespace KB.Application.Dto.Tags
+namespace KB.Application.Dto.Categories
 {
-   public  class InsertTagDto
+   public class AddCategoryDto
     {
         [Required]
         [MaxLength(Constant.MaxNameLength)]
         public string Name { get; set; }
+
+        public CategoryStateEnum State { get; set; }
+
     }
 }

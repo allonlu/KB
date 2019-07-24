@@ -11,7 +11,7 @@ namespace KB.Domain.Entities
         [Required]
         [MaxLength(Constant.MaxNameLength)]
         public string Name { get; set; }
-        public virtual ICollection<ArticleTag> ArticlesTags { get; set; }
+        //public virtual ICollection<ArticleTag> ArticlesTags { get; set; }
 
 
     }

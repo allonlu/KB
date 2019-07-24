@@ -13,7 +13,9 @@ namespace KB.EntityFramework
     public class InnerUnitOfWork : IUnitOfWork
     {
         private int _siteId = 0;
-       
+
+        public event EventHandler Disposed;
+
         public void Complete()
         {
            
