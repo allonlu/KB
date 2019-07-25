@@ -13,8 +13,11 @@ namespace KB.EntityFramework.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SiteId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(maxLength: 32, nullable: false),
-                    Description = table.Column<string>(maxLength: 512, nullable: true)
+                    Description = table.Column<string>(maxLength: 512, nullable: true),
+                    State = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,11 +39,28 @@ namespace KB.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "t_KB_Category",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SiteId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(maxLength: 32, nullable: false),
+                    State = table.Column<int>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_t_KB_Category", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "t_KB_Tag",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SiteId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 32, nullable: false)
                 },
                 constraints: table =>
@@ -68,6 +88,9 @@ namespace KB.EntityFramework.Migrations
 
             migrationBuilder.DropTable(
                 name: "t_KB_ArticlesTagsRelation");
+
+            migrationBuilder.DropTable(
+                name: "t_KB_Category");
 
             migrationBuilder.DropTable(
                 name: "t_KB_Tag");

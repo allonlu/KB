@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KB.EntityFramework.Migrations
 {
     [DbContext(typeof(KBDataContext))]
-    [Migration("20190718111611_Init")]
+    [Migration("20190725074830_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,8 +26,14 @@ namespace KB.EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CategoryId");
+
                     b.Property<string>("Description")
                         .HasMaxLength(512);
+
+                    b.Property<int>("SiteId");
+
+                    b.Property<int>("State");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -56,6 +62,27 @@ namespace KB.EntityFramework.Migrations
                     b.ToTable("t_KB_ArticlesTagsRelation");
                 });
 
+            modelBuilder.Entity("KB.Domain.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32);
+
+                    b.Property<int>("SiteId");
+
+                    b.Property<int>("State");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("t_KB_Category");
+                });
+
             modelBuilder.Entity("KB.Domain.Entities.Tag", b =>
                 {
                     b.Property<int>("Id")
@@ -65,6 +92,8 @@ namespace KB.EntityFramework.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(32);
+
+                    b.Property<int>("SiteId");
 
                     b.HasKey("Id");
 

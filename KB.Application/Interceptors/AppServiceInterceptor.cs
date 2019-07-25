@@ -12,7 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Transactions;
 
-namespace KB.Application.Interceptor
+namespace KB.Application.Interceptors
 {
     public class AppServiceInterceptor : IInterceptor
     {

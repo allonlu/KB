@@ -33,6 +33,7 @@ namespace KB.Domain.DomainServices
         public int Delete(int articleId)
         {
             var delCount=  _articleRepository.Delete(articleId);
+            delCount += ArticleTagDomainService.DeleteByArticle(articleId);
             return delCount;
         }
 

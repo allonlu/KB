@@ -25,6 +25,7 @@ namespace KB.EntityFramework
 
         public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate)
         {
+            if (predicate == null) return _dataSet.AsQueryable();
             return _dataSet.Where(predicate);
         }
 

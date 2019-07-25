@@ -35,17 +35,17 @@ namespace KB.EntityFramework
         /// <returns></returns>
         public override int SaveChanges()
         {
-            foreach (var entry in ChangeTracker.Entries().ToList())
-            {
-                if (entry.State == EntityState.Added)
-                {
-                    if (entry.Entity is IMustHaveSiteId)
-                    {
-                        ((IMustHaveSiteId)entry.Entity).SiteId = Session.GetSiteId();
-                    }
-                }
+            //foreach (var entry in ChangeTracker.Entries().ToList())
+            //{
+            //    if (entry.State == EntityState.Added)
+            //    {
+            //        if (entry.Entity is IMustHaveSiteId)
+            //        {
+            //            ((IMustHaveSiteId)entry.Entity).SiteId = Session.GetSiteId();
+            //        }
+            //    }
 
-            }
+            //}
             return base.SaveChanges();
         }
 
@@ -58,7 +58,7 @@ namespace KB.EntityFramework
         {
 
             modelBuilder.Entity<Article>()
-                .HasQueryFilter(a => a.SiteId == Session.GetSiteId())
+                //.HasQueryFilter(a => a.SiteId == Session.GetSiteId())
                 .ToTable("t_KB_Article")
                 .HasKey(t => t.Id);
 
@@ -66,7 +66,7 @@ namespace KB.EntityFramework
                   entity =>
                   {
                       entity.ToTable("t_KB_Tag")
-                            .HasQueryFilter(a => a.SiteId == Session.GetSiteId())
+                            //.HasQueryFilter(a => a.SiteId == Session.GetSiteId())
                             .HasKey(t => t.Id);
 
 

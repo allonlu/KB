@@ -53,8 +53,7 @@ namespace KB.Application.AppServices
         public int Delete(int articleId)
         {
             
-                int delCount = _articleTagDomainService.DeleteByArticle(articleId);
-                delCount += _articleDomainService.Delete(articleId);
+                int delCount =_articleDomainService.Delete(articleId);
 
                 return delCount;
         }
@@ -101,12 +100,8 @@ namespace KB.Application.AppServices
         [Permission("Article.Read")]
         public IList<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto)
         {
-            //var query = from a in Query(dto)
-            //            from at in _articleTagDomainService.GetAll(t => t.ArticleId == a.Id).DefaultIfEmpty()
-            //            from t in _tagDomainService.GetAll(t => t.Id == at.TagId).DefaultIfEmpty()
-            //            select new { Article = a, Tag = t };
-
-            var query1 = Query(dto).Select(
+            var list = Query(dto).ToList();
+            var query1 = list.Select(
                                      t=> new ArticleWithTagsDto()
                                      {
                                          Id = t.Id,

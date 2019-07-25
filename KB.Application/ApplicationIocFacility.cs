@@ -2,7 +2,7 @@
 using Castle.MicroKernel.Facilities;
 using Castle.MicroKernel.Registration;
 using KB.Application.AppServices;
-using KB.Application.Interceptor;
+using KB.Application.Interceptors;
 using KB.Domain;
 
 namespace KB.Application
