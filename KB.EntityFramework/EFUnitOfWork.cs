@@ -40,10 +40,10 @@ namespace KB.EntityFramework
 
         public void Dispose()
         {
-            Disposed(this, null);
             if (!_isCommit)
                 _transaction.Rollback();
             _transaction.Dispose();
+            Disposed(this, null);
         }
 
         public void SetSiteId(int siteId)

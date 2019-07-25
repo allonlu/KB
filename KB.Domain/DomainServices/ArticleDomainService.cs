@@ -17,6 +17,9 @@ namespace KB.Domain.DomainServices
         public IArticleTagDomainService ArticleTagDomainService { get; set; }
 
         [Mandatory]
+        public ITagDomainService TagDomainService { get; set; }
+
+        [Mandatory]
         public ICategoryDomainService CategoryDomainService { get; set; }
         public ArticleDomainService(
             IRepository<Article> articleRepository,

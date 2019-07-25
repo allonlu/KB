@@ -7,7 +7,7 @@ using System.Text;
 
 namespace KB.Domain.DomainServices
 {
-    public interface ICategoryDomainService
+    public interface ICategoryDomainService:IDomainService
     {
         Category Add(Category category);
         Category Update(Category category);

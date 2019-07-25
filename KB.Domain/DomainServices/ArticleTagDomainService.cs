@@ -101,7 +101,7 @@ namespace KB.Domain.DomainServices
         public IQueryable<Article> GetArticles(int tagId)
         {
             var query = from at in _repository.GetAll(e=>e.TagId == tagId)
-                        join t in ArticleDomainService.GetAll(_=>true) on at.ArticleId equals t.Id
+                        join t in ArticleDomainService.GetAll(null) on at.ArticleId equals t.Id
                         select t;
             return query;
         }
@@ -109,7 +109,7 @@ namespace KB.Domain.DomainServices
         public IQueryable<Tag> GetTags(int articleId)
         {
             var query = from at in _repository.GetAll(e => e.ArticleId == articleId)
-                        join t in TagDomainService.GetAll(_=>true) on at.TagId equals t.Id
+                        join t in TagDomainService.GetAll(null) on at.TagId equals t.Id
                         select t;
             return query;
         }

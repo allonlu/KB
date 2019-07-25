@@ -63,8 +63,6 @@ namespace KB.Application.Interceptor
             {
                 case "Add":
                     return IsolationLevel.Serializable;
-                case "Get":
-                    return IsolationLevel.RepeatableRead;
             }
 
             return IsolationLevel.ReadCommitted;

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace KB.Application.AppServices
 {
-    public interface ICategoryAppService
+    public interface ICategoryAppService:IAppService
     {
         IList<CategoryDto> GetList();
         CategoryDto Add(AddCategoryDto dto);

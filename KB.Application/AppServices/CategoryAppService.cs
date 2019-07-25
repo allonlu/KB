@@ -7,15 +7,17 @@ using KB.Application.Dto.Articles;
 using KB.Application.Dto.Categories;
 using KB.Domain.DomainServices;
 using KB.Domain.Entities;
+using KB.Domain.Uow;
 using KB.Infrastructure.Runtime.Authorization;
 
 namespace KB.Application.AppServices
 {
-    public class CategoryAppService :ICategoryAppService
+    public class CategoryAppService : AppServiceBase,ICategoryAppService
     {
         private readonly ICategoryDomainService _categoryDomainService;
 
-        public CategoryAppService(ICategoryDomainService categoryDomainService)
+        public CategoryAppService(ICategoryDomainService categoryDomainService,
+                                    IUnitOfWorkManager unitOfWorkManager):base(unitOfWorkManager)
         {
             this._categoryDomainService = categoryDomainService;
         }

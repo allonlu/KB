@@ -11,14 +11,14 @@ using KB.Infrastructure.Ioc;
 namespace KB.Domain.DomainServices
 {
 
-    public class CategoryDomainService :DomainServiceBase, ICategoryDomainService, IDomainService
+    public class CategoryDomainService :DomainServiceBase, ICategoryDomainService
     {
         private IRepository<Category> _repository;
 
         [Mandatory]
-        public IArticleDomainService ArticleDomainService { get; set; }
+        public  IArticleDomainService ArticleDomainService { get; set; }
         public CategoryDomainService(IRepository<Category> repository,IUnitOfWorkManager unitOfWorkManager):base(unitOfWorkManager)
-        {
+        { 
             _repository = repository;
         }
         public int Delete(Category category)

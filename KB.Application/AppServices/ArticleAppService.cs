@@ -101,23 +101,22 @@ namespace KB.Application.AppServices
         [Permission("Article.Read")]
         public IList<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto)
         {
-            var query = from a in Query(dto)
-                        from at in _articleTagDomainService.GetAll(t => t.ArticleId == a.Id).DefaultIfEmpty()
-                        from t in _tagDomainService.GetAll(t => t.Id == at.TagId).DefaultIfEmpty()
-                        select new { Article = a, Tag = t };
+            //var query = from a in Query(dto)
+            //            from at in _articleTagDomainService.GetAll(t => t.ArticleId == a.Id).DefaultIfEmpty()
+            //            from t in _tagDomainService.GetAll(t => t.Id == at.TagId).DefaultIfEmpty()
+            //            select new { Article = a, Tag = t };
 
-            var query1 = from t in query
-                         group t by t.Article into g
-                         select new ArticleWithTagsDto()
-                         {
-                             Id = g.Key.Id,
-                             Title = g.Key.Title,
-                             Description = g.Key.Description,
-                             Tags = g.Where(e => e.Tag != null).Select(t => Mapper.Map<TagDto>(t.Tag)).ToList() ?? new List<TagDto>()
-                         };
-
+            var query1 = Query(dto).Select(
+                                     t=> new ArticleWithTagsDto()
+                                     {
+                                         Id = t.Id,
+                                         Title = t.Title,
+                                         Description = t.Description,
+                                         Tags = _articleTagDomainService.GetTags(t.Id).ProjectTo<TagDto>().ToList()
+                                     });
             return query1.ToList();
         }
+
         [Permission("Article.Read")]
         public IList<TagDto> GetTags(int articleId)
         {
