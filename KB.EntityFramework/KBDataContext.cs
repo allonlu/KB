@@ -9,12 +9,12 @@ using System.Linq;
 
 namespace KB.EntityFramework
 {
-   
+
     public class KBDataContext : DbContext
     {
         private IConfiguration _configuration;
         [Mandatory]
-        public ISession Session { get;  set; }
+        public ISession Session { get; set; }
 
 
         public KBDataContext()
@@ -24,7 +24,7 @@ namespace KB.EntityFramework
         //{
         //    _configuration=configuration;
         //}
-        
+
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<ArticleTag> ArticleTags { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
@@ -39,7 +39,7 @@ namespace KB.EntityFramework
             {
                 if (entry.State == EntityState.Added)
                 {
-                    if(entry.Entity is IMustHaveSiteId)
+                    if (entry.Entity is IMustHaveSiteId)
                     {
                         ((IMustHaveSiteId)entry.Entity).SiteId = Session.GetSiteId();
                     }
@@ -69,14 +69,11 @@ namespace KB.EntityFramework
                             .HasQueryFilter(a => a.SiteId == Session.GetSiteId())
                             .HasKey(t => t.Id);
 
-            
+
 
                       entity.HasIndex(t => t.Name).IsUnique();
                   }
                 );
-
-                
-                
 
 
             modelBuilder.Entity<ArticleTag>(
@@ -88,14 +85,14 @@ namespace KB.EntityFramework
 
                   }
                 );
-       modelBuilder.Entity<Category>(
-       entity =>
-       {
-           entity.ToTable("t_KB_Category")
-                 .HasKey(t => t.Id);
+            modelBuilder.Entity<Category>(
+            entity =>
+            {
+                entity.ToTable("t_KB_Category")
+                      .HasKey(t => t.Id);
 
-       }
-     );
+            }
+          );
         }
     }
 }

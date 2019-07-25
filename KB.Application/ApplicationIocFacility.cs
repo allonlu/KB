@@ -26,16 +26,6 @@ namespace KB.Application
             })
             .WithServiceAllInterfaces()
             .LifestyleTransient()
-
-            //Classes.FromAssemblyNamed("KB.Application").Pick().If(t => t.Name.EndsWith("AppService"))
-            //            .Configure(configurer =>
-            //            {
-            //                configurer.Named(configurer.Implementation.Name);
-            //                ///注册AOP拦截器
-            //                _ = configurer.Interceptors(InterceptorReference.ForType<AppServiceInterceptor>()).Anywhere;
-            //            })
-            //            .WithService.DefaultInterfaces().LifestyleTransient()
-
             );
             DomainIocInitializer.Init(Kernel);
         }

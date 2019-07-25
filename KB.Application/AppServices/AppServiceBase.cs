@@ -21,52 +21,6 @@ namespace KB.Application.AppServices
             Logger = new NullLogger();
         }
         /// <summary>
-        /// 权限认证,不通过就抛出一个权限错误。
-        /// </summary>
-        /// <param name="rightName"></param>
-        /// <returns></returns>
-        public void Permission(string rightName)
-        {
-            if (!PermissionChecker.IsGranted(Session.GetAgentId(), rightName))
-            {
-                Logger.Info($"SiteId:{Session.GetSiteId()},AgentId:{Session.GetAgentId()},Type:PermissionCheckFail,Permission:{rightName} ");
-                throw new Exception("没有权限！");
-            }
-
-        }
-        protected T Run<T>(string permissionName,Func<T> func)
-        {
-            using(var uow = _unitOfWorkManager.Begin())
-            {
-               
-                uow.SetSiteId(Session.GetSiteId());
-
-               Permission(permissionName);
-
-                var t = func();
-
-                uow.Complete();
-
-                return t;
-            }
-
-        }
-        protected void Run(string permissionName, Action func)
-        {
-            using (var uow = _unitOfWorkManager.Begin())
-            {
-
-                uow.SetSiteId(Session.GetSiteId());
-
-                Permission(permissionName);
-
-                func();
-
-                uow.Complete();
-            }
-
-        }
-        /// <summary>
         /// IOC容器注入
         /// </summary>
         /// 

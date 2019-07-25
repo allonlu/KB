@@ -9,19 +9,17 @@ namespace KB.Infrastructure.Exceptions
     {
         public Type EntityType { get; set; }
         public int Id { get; set; }
-        private static string formatMessage = "数据不存在";
 
-        public EntityNotFoundException()
+        public override string Message => string.Format(base.Message, EntityType.Name, Id);
+
+        public EntityNotFoundException(int id, Type entityType) : this(id)
         {
+            EntityType = entityType;
 
         }
-        public EntityNotFoundException(int errorCode) : base(errorCode, formatMessage)
+        public EntityNotFoundException(int id) : base(ErrorCodes.EntityNotFound,ErrorMessages.EntityNotFound)
         {
-            
-        }
-
-        public EntityNotFoundException(int errorCode, Exception innerException) : base(errorCode, formatMessage, innerException)
-        {
+            Id = id;
         }
     }
 }

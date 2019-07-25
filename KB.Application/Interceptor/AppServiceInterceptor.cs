@@ -82,13 +82,13 @@ namespace KB.Application.Interceptor
         {
             var attrs = method.GetCustomAttributes(true).OfType<PermissionAttribute>().ToArray();
             if (attrs.Length == 0) {
-                throw new AuthorizationException(100010,"没有配置权限！");
+                throw new AuthorizationException();
             } 
             var permissionName = attrs[0].Name;
             if (!PermissionChecker.IsGranted(Session.GetAgentId(), permissionName))
             {
                 Logger.Info($"SiteId:{Session.GetSiteId()},AgentId:{Session.GetAgentId()},Type:PermissionCheckFail,Permission:{permissionName} ");
-                throw new AuthorizationException(100011, "没有权限！");
+                throw new AuthorizationException();
             }
             Logger.Info($"SiteId:{Session.GetSiteId()},AgentId:{Session.GetAgentId()},Type:PermissionCheckSuccess,Permission:{permissionName} ");
         }

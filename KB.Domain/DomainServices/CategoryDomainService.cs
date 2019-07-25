@@ -6,6 +6,7 @@ using System.Text;
 using KB.Domain.Entities;
 using KB.Domain.Repositories;
 using KB.Domain.Uow;
+using KB.Infrastructure.Exceptions;
 using KB.Infrastructure.Ioc;
 
 namespace KB.Domain.DomainServices
@@ -33,8 +34,13 @@ namespace KB.Domain.DomainServices
 
         public Category Get(int id)
         {
-            return _repository.Get(id);
+            var entity= _repository.Get(id);
+            if (entity == null)
+                throw new EntityNotFoundException(id, typeof(Category));
+            return entity;
         }
+
+
 
         public IQueryable<Category> GetAll(Expression<Func<Category,bool>> predicate)
         {

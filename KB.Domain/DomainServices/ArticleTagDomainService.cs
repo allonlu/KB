@@ -36,10 +36,7 @@ namespace KB.Domain.DomainServices
         private Article ValidateArticle(int articleId)
         {
           
-            var article = ArticleDomainService.Get(articleId);
-            if (article == null)
-                throw new EntityNotFoundException(210010) { Id = articleId,EntityType=typeof(Article)};
-            return article;
+           return  ArticleDomainService.Get(articleId);
 
         }
         public Tag AddTag(int articleId, int tagId)

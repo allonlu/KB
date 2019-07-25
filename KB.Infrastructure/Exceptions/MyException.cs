@@ -9,9 +9,9 @@ namespace KB.Infrastructure.Exceptions
     {
         public int ErrorCode { get; private set; }
 
-        public MyException()
+        public MyException(int errorCode)
         {
-
+            ErrorCode = errorCode;
         }
 
         public MyException(int errorCode,string message) : base(message)

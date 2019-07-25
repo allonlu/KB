@@ -8,20 +8,13 @@ namespace KB.Infrastructure.Exceptions
     public class AuthorizationException : MyException
     {
 
-        public AuthorizationException()
+        public AuthorizationException():base(ErrorCodes.NoAuthorization,ErrorMessages.NoAuthorization)
         {
         }
 
-        public AuthorizationException(int errorCode, string message) : base(errorCode, message)
-        {
-        }
 
-        public AuthorizationException(int errorCode, string message, Exception innerException) : base(errorCode, message, innerException)
-        {
-        }
 
-        protected AuthorizationException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+
+
     }
 }

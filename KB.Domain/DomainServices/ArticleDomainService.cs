@@ -1,6 +1,7 @@
 ﻿using KB.Domain.Entities;
 using KB.Domain.Repositories;
 using KB.Domain.Uow;
+using KB.Infrastructure.Exceptions;
 using KB.Infrastructure.Ioc;
 using System;
 using System.Linq;
@@ -44,7 +45,10 @@ namespace KB.Domain.DomainServices
 
         public Article Get(int id)
         {
-            return _articleRepository.Get(id);
+            var entity = _articleRepository.Get(id);
+            if (entity == null)
+                throw new EntityNotFoundException(id) {EntityType = typeof(Article) };
+            return entity;
         }
 
         public IQueryable<Article> GetAll(Expression<Func<Article, bool>> predicate)
@@ -59,13 +63,13 @@ namespace KB.Domain.DomainServices
 
         public bool Public(Article article)
         {
-            // if (article.Category.State != CategoryStateEnum.Audited)
-            //{
-            //    throw  new Exception("所属Category的状态没有审核，不允许进行此操作！");
-            //}
-             if(article.State!=ArticleStateEnum.Audited)
+            if (CategoryDomainService.Get(article.CategoryId).State != CategoryStateEnum.Audited)
             {
-                throw  new Exception("Article本身的状态不正确，不能进行此操作！");
+                throw new MyException(100101, "Article本身的状态不正确，不能进行此操作！");
+            }
+            if (article.State!=ArticleStateEnum.Audited)
+            {
+                throw new MyException(100100,"Article本身的状态不正确，不能进行此操作！");
             }
             article.State = ArticleStateEnum.Publish;
             _articleRepository.Update(article);
