@@ -69,7 +69,6 @@ namespace KB.Application.AppServices
         private IQueryable<Article> Query(QueryArticleInput dto)
         {
             Expression<Func<Article, bool>> expression=null;
-            Expression<Func<Article, bool>> expression1;
 
             if (!string.IsNullOrEmpty(dto.Title))
             {
@@ -77,12 +76,7 @@ namespace KB.Application.AppServices
             }
             if (dto.articleId.HasValue)
             {
-
-                expression1 = e => e.Id == dto.articleId;
-                if (expression == null)
-                    expression = expression1;
-                else
-                    expression = LambdaExpression.Lambda<Func<Article, bool>>(Expression.And(expression, expression1));
+                expression = e => e.Id==dto.articleId.Value;
             }
             return _articleDomainService.GetAll(expression);
                             
