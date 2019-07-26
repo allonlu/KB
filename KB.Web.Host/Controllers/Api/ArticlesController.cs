@@ -28,15 +28,7 @@ namespace KB.Web.Host.Controllers
         {
             return _articleAppService.Add(dto);
         }
-        [HttpGet]
-        public IList<ArticleDto> GetList([FromQuery] QueryArticleInput dto)
-        {
 
-
-            return _articleAppService.GetList(dto);
-
-
-        }
         [HttpGet("{id}:withTags")]
         public ArticleWithTagsDto GetWithTags(int id)
         {
@@ -45,12 +37,28 @@ namespace KB.Web.Host.Controllers
 
 
         }
+
+        //public IActionResult GetList(QueryArticleInput dto,string include)
+        //{
+        //    switch (include) {
+        //        case "tags":
+        //            return Json(GetListWithTags(dto));
+        //        default:
+        //            return Json(GetList(dto));
+        //    }
+
+        //}
+
+       [HttpGet]
+        public IList<ArticleDto> GetList([FromQuery] QueryArticleInput dto)
+        {
+            return _articleAppService.GetList(dto);
+        }
+
         [HttpGet("~/api/[controller]:withTags")]
         public IList<ArticleWithTagsDto> GetListWithTags([FromQuery] QueryArticleInput dto)
         {
-
             return _articleAppService.GetListWithTags(dto);
-
 
         }
         [HttpGet("{id}")]
