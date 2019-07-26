@@ -87,6 +87,7 @@ namespace KB.Application.AppServices
             return _articleDomainService.GetAll(expression);
                             
         }
+        
         [Permission("Article.Read")]
         public IList<ArticleDto> GetList(QueryArticleInput dto)
         {
@@ -97,9 +98,11 @@ namespace KB.Application.AppServices
          
 
         }
+        
         [Permission("Article.Read")]
         public IList<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto)
         {
+
             var list = Query(dto).ToList();
             var query1 = list.Select(
                                      t=> new ArticleWithTagsDto()
@@ -135,8 +138,6 @@ namespace KB.Application.AppServices
                 var entity = _articleDomainService.Add(Mapper.Map<Article>(dto));
                 _articleTagDomainService.AddTags(entity.Id, Mapper.Map<IList<Tag>>(tags));
                 return Mapper.Map<ArticleDto>(entity);
-           
-
         }
         [Permission("Article.Tag.Remove")]
         public int DeleteTag(ArticleTagDto dto)
