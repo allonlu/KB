@@ -14,7 +14,7 @@ namespace KB.Domain.DomainServices
         ArticleTag Get(int articleId, int tagId);
         IQueryable<Tag> GetTags(int articleId);
         IQueryable<Article> GetArticles(int tagId);
-        ArticleTag Insert(ArticleTag entity);
+        ArticleTag Add(ArticleTag entity);
 
         void AddTags(int articleId, IList<Tag> tags);
         Tag AddTag(int articleId, Tag tag);

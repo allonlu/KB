@@ -37,7 +37,7 @@ namespace KB.Application.AppServices
         public TagDto AddTag(ArticleTagDto dto)
         {
 
-                var t = _articleTagDomainService.Insert(Mapper.Map<ArticleTag>(dto));
+                var t = _articleTagDomainService.Add(Mapper.Map<ArticleTag>(dto));
                 return Mapper.Map<TagDto>(t);
            
         }
@@ -57,7 +57,7 @@ namespace KB.Application.AppServices
 
                 return delCount;
         }
-        [Permission("Article.Read")]
+        [Permission("Article.Get")]
         public ArticleDto Get(int id)
         {
             
@@ -74,15 +74,12 @@ namespace KB.Application.AppServices
             {
                 expression = e => e.Title.Contains(dto.Title);
             }
-            if (dto.articleId.HasValue)
-            {
-                expression = e => e.Id==dto.articleId.Value;
-            }
+ 
             return _articleDomainService.GetAll(expression);
                             
         }
         
-        [Permission("Article.Read")]
+        [Permission("Article.Get")]
         public IList<ArticleDto> GetList(QueryArticleInput dto)
         {
             
@@ -93,7 +90,7 @@ namespace KB.Application.AppServices
 
         }
         
-        [Permission("Article.Read")]
+        [Permission("Article.Get.Tag")]
         public IList<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto)
         {
 
@@ -109,14 +106,14 @@ namespace KB.Application.AppServices
             return query1.ToList();
         }
 
-        [Permission("Article.Read")]
+        [Permission("Article.Tag.Get")]
         public IList<TagDto> GetTags(int articleId)
         {
             
            return _articleTagDomainService.GetTags(articleId).ProjectTo<TagDto>().ToList();
            
         }
-        [Permission("Article.Insert")]
+        [Permission("Article.Add")]
         public ArticleDto Add(AddArticleDto dto)
         {
            
@@ -125,7 +122,7 @@ namespace KB.Application.AppServices
           
         }
 
-        [Permission("Article.Tag.Insert")]
+        [Permission("Article.Tag.Add")]
         public ArticleDto AddWithTags(AddArticleDto dto, IList<AddTagDto> tags)
         {
           
@@ -133,13 +130,13 @@ namespace KB.Application.AppServices
                 _articleTagDomainService.AddTags(entity.Id, Mapper.Map<IList<Tag>>(tags));
                 return Mapper.Map<ArticleDto>(entity);
         }
-        [Permission("Article.Tag.Remove")]
-        public int DeleteTag(ArticleTagDto dto)
+        [Permission("Article.Tag.Delete")]
+        public int DeleteTag(int articleId, int tagId)
         {
-             return  _articleTagDomainService.Delete(dto.ArticleId, dto.TagId);
+             return  _articleTagDomainService.Delete(articleId, tagId);
         }
 
-        [Permission("Article.Tag.Remove")]
+        [Permission("Article.Tag.Delete")]
         public int DeleteTag(int articleId)
         {
            
@@ -153,6 +150,13 @@ namespace KB.Application.AppServices
              var entity = _articleDomainService.Update(Mapper.Map<Article>(dto));
              return Mapper.Map<ArticleDto>(entity);
            
+        }
+        [Permission("Article.Get.Tag")]
+        public ArticleWithTagsDto GetWithTags(int id)
+        {
+            var artitle = _articleDomainService.Get(id).MapTo<ArticleWithTagsDto>();
+            artitle.Tags = _articleTagDomainService.GetTags(artitle.Id).Select(e=>e.MapTo<TagDto>()).ToList();
+            return artitle;
         }
     }
 }

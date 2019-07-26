@@ -111,7 +111,7 @@ namespace KB.Domain.DomainServices
             return query;
         }
 
-        public ArticleTag Insert(ArticleTag entity)
+        public ArticleTag Add(ArticleTag entity)
         {
             return _repository.Insert(entity);
         }

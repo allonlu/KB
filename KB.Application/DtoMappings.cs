@@ -14,12 +14,14 @@ namespace KB.Application
             CreateMap<Article, ArticleDto>();
             CreateMap<ArticleDto, Article>();
             CreateMap<AddArticleDto, Article>();
+            CreateMap<UpdateArticleDto, ArticleDto>();
 
 
             // Tag
             CreateMap<Tag, TagDto>();
             CreateMap<TagDto, Tag>();
             CreateMap<AddTagDto, Tag>();
+            CreateMap<UpdateTagDto, TagDto>();
 
             CreateMap<ArticleTagDto, ArticleTag>();
 

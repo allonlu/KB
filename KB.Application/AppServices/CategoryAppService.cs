@@ -32,12 +32,12 @@ namespace KB.Application.AppServices
         {
             return _categoryDomainService.Delete(id);
         }
-        [Permission("Category.Article.Read")]
+        [Permission("Category.Article.Get")]
         public IList<ArticleDto> GetArticles(int categoryId)
         {
             return _categoryDomainService.GetArticles(categoryId).ProjectTo<ArticleDto>().ToList();
         }
-        [Permission("Category.Read")]
+        [Permission("Category.Get")]
         public IList<CategoryDto> GetList()
         {
             return _categoryDomainService.GetAll(null).ProjectTo<CategoryDto>().ToList();

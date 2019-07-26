@@ -26,20 +26,20 @@ namespace KB.Application.AppServices
         {
             return _tagDomainService.Delete(tagId);
         }
-        [Permission("Tag.Read")]
+        [Permission("Tag.Get")]
         public TagDto Get(int tagId)
         {
             return Mapper.Map<TagDto>(_tagDomainService.Get(tagId));
         }
-        [Permission("Tag.Read")]
+        [Permission("Tag.Get")]
         public IList<TagDto> GetList(QueryTagInput dto)
         {
             return _tagDomainService.GetAll(t => t.Name.Contains(dto.Name))
                         .ProjectTo<TagDto>()
                         .ToList();
         }
-        [Permission("Tag.Insert")]
-        public TagDto Insert(AddTagDto dto)
+        [Permission("Tag.Add")]
+        public TagDto Add(AddTagDto dto)
         {
             var entity = _tagDomainService.Insert(Mapper.Map<Tag>(dto));
             return Mapper.Map<TagDto>(entity);

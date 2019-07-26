@@ -6,7 +6,14 @@
 }
 <h2>Article</h2>
 @Html.ActionLink("New Article", "Add", new { }, new { Class = "btn btn-primary", Title = "Create a new artile" })
-@Html.ActionLink("New Category", "Add","Category", new { }, new { Class = "btn btn-primary", Title = "Create a new artile" })
+@Html.ActionLink("New Category", "Add", "Category", new { }, new { Class = "btn btn-primary", Title = "Create a new artile" })
+
+<form class="form-inline" method="post" action="Article/GetListWithTags">
+    <input type="text" class="form-control  form-control-sm" name="articleId" />
+    <input type="text" class="form-control  form-control-sm" name="title" />
+    <input class="btn btn-info btn-sm" type="submit" value="Query" />
+</form>
+
 <table class="table table-bordered">
 
     @foreach (ArticleWithTagsDto dto in Model)
