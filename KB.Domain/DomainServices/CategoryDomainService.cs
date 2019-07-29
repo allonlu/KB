@@ -19,7 +19,7 @@ namespace KB.Domain.DomainServices
 
         [Mandatory]
         public  IArticleDomainService ArticleDomainService { get; set; }
-        public CategoryDomainService(IRepository<Category> repository,IUnitOfWorkManager unitOfWorkManager):base(unitOfWorkManager)
+        public CategoryDomainService(IRepository<Category> repository)
         { 
             _repository = repository;
         }

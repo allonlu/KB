@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v2.2": {
       "KB.Dapper/1.0.0": {
         "dependencies": {
+          "Comm100": "1.0.2-alpha",
           "Dapper": "1.60.6",
           "DapperExtensions.DotnetCore": "1.0.1",
           "JetBrains.Annotations": "2019.1.3",
@@ -18,7 +19,19 @@
           "KB.Dapper.dll": {}
         }
       },
-      "Castle.Core/4.3.1": {
+      "AutoMapper/8.1.1": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.5.0",
+          "System.Reflection.Emit": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AutoMapper.dll": {
+            "assemblyVersion": "8.1.1.0",
+            "fileVersion": "8.1.1.0"
+          }
+        }
+      },
+      "Castle.Core/4.4.0": {
         "dependencies": {
           "System.Collections.Specialized": "4.3.0",
           "System.ComponentModel": "4.3.0",
@@ -33,7 +46,7 @@
         "runtime": {
           "lib/netstandard1.5/Castle.Core.dll": {
             "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.3.1.0"
+            "fileVersion": "4.4.0.0"
           }
         }
       },
@@ -54,7 +67,7 @@
       },
       "Castle.Windsor/5.0.0": {
         "dependencies": {
-          "Castle.Core": "4.3.1",
+          "Castle.Core": "4.4.0",
           "Microsoft.Extensions.DependencyModel": "2.0.3",
           "System.Runtime.Loader": "4.3.0",
           "System.Runtime.Serialization.Formatters": "4.3.0",
@@ -64,6 +77,19 @@
           "lib/netstandard1.6/Castle.Windsor.dll": {
             "assemblyVersion": "5.0.0.0",
             "fileVersion": "5.0.0.0"
+          }
+        }
+      },
+      "Comm100/1.0.2-alpha": {
+        "dependencies": {
+          "AutoMapper": "8.1.1",
+          "Castle.Core": "4.4.0",
+          "Castle.Windsor": "5.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Comm100.dll": {
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       },
@@ -83,7 +109,7 @@
       "DapperExtensions.DotnetCore/1.0.1": {
         "dependencies": {
           "Dapper": "1.60.6",
-          "Microsoft.CSharp": "4.4.0",
+          "Microsoft.CSharp": "4.5.0",
           "System.Collections": "4.3.0",
           "System.Linq": "4.3.0",
           "System.Runtime": "4.3.0",
@@ -446,7 +472,7 @@
       },
       "Microsoft.AspNetCore.JsonPatch/2.0.0": {
         "dependencies": {
-          "Microsoft.CSharp": "4.4.0",
+          "Microsoft.CSharp": "4.5.0",
           "Newtonsoft.Json": "10.0.1"
         },
         "runtime": {
@@ -898,7 +924,7 @@
           }
         }
       },
-      "Microsoft.CSharp/4.4.0": {},
+      "Microsoft.CSharp/4.5.0": {},
       "Microsoft.DotNet.PlatformAbstractions/2.0.3": {
         "dependencies": {
           "System.AppContext": "4.3.0",
@@ -1327,7 +1353,7 @@
       },
       "Newtonsoft.Json/10.0.1": {
         "dependencies": {
-          "Microsoft.CSharp": "4.4.0",
+          "Microsoft.CSharp": "4.5.0",
           "System.Collections": "4.3.0",
           "System.ComponentModel.TypeConverter": "4.3.0",
           "System.Diagnostics.Debug": "4.3.0",
@@ -2168,6 +2194,7 @@
       "KB.Domain/1.0.0": {
         "dependencies": {
           "Castle.Windsor": "5.0.0",
+          "Comm100": "1.0.2-alpha",
           "KB.Infrastructure": "1.0.0"
         },
         "runtime": {
@@ -2177,6 +2204,7 @@
       "KB.EntityFramework/1.0.0": {
         "dependencies": {
           "Castle.Windsor": "5.0.0",
+          "Comm100": "1.0.2-alpha",
           "KB.Domain": "1.0.0",
           "KB.Infrastructure": "1.0.0",
           "Microsoft.EntityFrameworkCore": "2.2.6",
@@ -2189,7 +2217,8 @@
       "KB.Infrastructure/1.0.0": {
         "dependencies": {
           "Castle.Facilities.AspNetCore": "5.0.0",
-          "Castle.Windsor": "5.0.0"
+          "Castle.Windsor": "5.0.0",
+          "Comm100": "1.0.2-alpha"
         },
         "runtime": {
           "KB.Infrastructure.dll": {}
@@ -2203,12 +2232,19 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Castle.Core/4.3.1": {
+    "AutoMapper/8.1.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-8Y/eTr6GTElAGV7eAmJuhfLhGdFpNvaNrQ9UQYDScziLmX+/BLGM+9eQr0IcdNDcPN0ADmbtwT6MgecGKy4obw==",
-      "path": "castle.core/4.3.1",
-      "hashPath": "castle.core.4.3.1.nupkg.sha512"
+      "sha512": "sha512-GKBliBukkLG0z/U0T4Jy+yEpr5bKDImQ9nEy/T8jqNulwNkWDjiEWa9TL4yCxIhleDbmVmw2xYSaJ3Eb2OcSUg==",
+      "path": "automapper/8.1.1",
+      "hashPath": "automapper.8.1.1.nupkg.sha512"
+    },
+    "Castle.Core/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-b5rRL5zeaau1y/5hIbI+6mGw3cwun16YjkHZnV9RRT5UyUIFsgLmNXJ0YnIN9p8Hw7K7AbG1q1UclQVU3DinAQ==",
+      "path": "castle.core/4.4.0",
+      "hashPath": "castle.core.4.4.0.nupkg.sha512"
     },
     "Castle.Facilities.AspNetCore/5.0.0": {
       "type": "package",
@@ -2223,6 +2259,13 @@
       "sha512": "sha512-kfaIV95ZnYQj6gjq1G9o81gBuxo4o2/yCwgaylIeytcK3jtKJe4RGN6KxSV6viwvKKn+XQvblrBHk1qQyD/YtQ==",
       "path": "castle.windsor/5.0.0",
       "hashPath": "castle.windsor.5.0.0.nupkg.sha512"
+    },
+    "Comm100/1.0.2-alpha": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MnFgWd4EtiCG3kRsGB2Yvnsr1NNdpG8XOYYK9flZWEUWkjKbdqHcjcQ3LBSbh2KYFgqqYULcXkyzQy/xLyOMgA==",
+      "path": "comm100/1.0.2-alpha",
+      "hashPath": "comm100.1.0.2-alpha.nupkg.sha512"
     },
     "Dapper/1.60.6": {
       "type": "package",
@@ -2623,12 +2666,12 @@
       "path": "microsoft.codeanalysis.razor/2.0.1",
       "hashPath": "microsoft.codeanalysis.razor.2.0.1.nupkg.sha512"
     },
-    "Microsoft.CSharp/4.4.0": {
+    "Microsoft.CSharp/4.5.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-vvVR/B08YVghQ4jHEloxqw2ZWzEGE1AOA5E0DioUM3ujbXz6FD3AfB/0Jl2ohJPd0nXYGwmPe1En6HTsSriq1A==",
-      "path": "microsoft.csharp/4.4.0",
-      "hashPath": "microsoft.csharp.4.4.0.nupkg.sha512"
+      "sha512": "sha512-kaj6Wb4qoMuH3HySFJhxwQfe8R/sJsNJnANrvv8WdFPMoNbKY5htfNscv+LHCu5ipz+49m2e+WQXpLXr9XYemQ==",
+      "path": "microsoft.csharp/4.5.0",
+      "hashPath": "microsoft.csharp.4.5.0.nupkg.sha512"
     },
     "Microsoft.DotNet.PlatformAbstractions/2.0.3": {
       "type": "package",

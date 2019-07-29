@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using AutoMapper.QueryableExtensions;
 using Comm100.Application.Services;
+using Comm100.Extension;
 using Comm100.Runtime;
 using KB.Application.Dto.Articles;
 using KB.Application.Dto.Categories;

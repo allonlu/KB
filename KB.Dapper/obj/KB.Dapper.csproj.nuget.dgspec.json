@@ -49,6 +49,10 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "Comm100": {
+              "target": "Package",
+              "version": "[1.0.2-alpha, )"
+            },
             "Dapper": {
               "target": "Package",
               "version": "[1.60.6, )"
@@ -127,6 +131,10 @@
               "target": "Package",
               "version": "[5.0.0, )"
             },
+            "Comm100": {
+              "target": "Package",
+              "version": "[1.0.2-alpha, )"
+            },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",
               "target": "Package",
@@ -195,6 +203,10 @@
             "Castle.Windsor": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "Comm100": {
+              "target": "Package",
+              "version": "[1.0.2-alpha, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -278,7 +290,7 @@
             },
             "Comm100": {
               "target": "Package",
-              "version": "[1.0.1-alpha, )"
+              "version": "[1.0.2-alpha, )"
             },
             "Microsoft.NETCore.App": {
               "suppressParent": "All",

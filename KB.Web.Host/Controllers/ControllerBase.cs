@@ -1,6 +1,6 @@
 ﻿
-using KB.Infrastructure.ActionResult;
-using KB.Infrastructure.Ioc;
+using Comm100.Domain.Ioc;
+using Comm100.Runtime;
 using KB.Infrastructure.Runtime.Logging;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,7 +13,7 @@ namespace KB.Web.Host.Controllers
         public ControllerBase()
         {
 
-            Logger = new NullLogger();
+            Logger =  NullLogger.Instance;
         }
         /// <summary>
         /// IOC容器注入
@@ -21,46 +21,5 @@ namespace KB.Web.Host.Controllers
         [Mandatory]
         public ILogger Logger { get; set; }
 
-        protected MyActionResult<T> Run<T>(Func<MyActionResult<T>> action)
-        {
-            try
-            {
-                return action();
-                
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e.Message);
-                return ActionResultHelper.Fail<T>(e);
-
-            }
-        }
-
-        protected IActionResult Run(Func<IActionResult> action)
-        {
-            try
-            {
-                return action();
-
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e.Message);
-                return Json(ActionResultHelper.Fail(e));
-
-            }
-        }
-        protected void Run(Action action)
-        {
-            try
-            {
-                 action();
-
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e.Message);
-            }
-        }
     }
 }

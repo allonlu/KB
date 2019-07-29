@@ -1,7 +1,6 @@
 ﻿using KB.Application.AppServices;
 using KB.Application.Dto.Articles;
 using KB.Application.Dto.Tags;
-using KB.Infrastructure.ActionResult;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
@@ -46,11 +45,6 @@ namespace KB.Web.Host.Controllers
                 return RedirectToAction("Index");
            
         }
-        public IActionResult GetList(QueryArticleInput dto)
-        {
-                var list = _articleAppService.GetList(dto);
-                return Json(ActionResultHelper.Success(list));
-        }
         [HttpPost("Article/AddTag/{articleId}")]
         public IActionResult AddTag(int articleId, AddTagDto dto)
         {
@@ -67,16 +61,9 @@ namespace KB.Web.Host.Controllers
         public IActionResult RemoveTag(ArticleTagDto dto)
                 
         {
-            
-            _articleAppService.DeleteTag(dto);
+            _articleAppService.DeleteTag(dto.ArticleId,dto.TagId);
             return RedirectToAction("Index");
         }
-        public IActionResult Get(int id)
-        {
-         
-               var article = _articleAppService.Get(id);
-               return Json(ActionResultHelper.Success(article));
-            
-        }
+
     }
 }

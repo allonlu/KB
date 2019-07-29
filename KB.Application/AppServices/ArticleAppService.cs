@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using System;
 using Comm100.Application.Services;
 using Comm100.Runtime;
+using Comm100.Extension;
 
 namespace KB.Application.AppServices
 {
