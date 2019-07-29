@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using Comm100.Domain.Services;
 using KB.Domain.Entities;
 
 namespace KB.Domain.DomainServices

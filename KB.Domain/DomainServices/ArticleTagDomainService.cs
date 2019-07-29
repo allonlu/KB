@@ -5,10 +5,11 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using KB.Domain.Entities;
-using KB.Domain.Repositories;
-using KB.Domain.Uow;
-using KB.Infrastructure.Exceptions;
-using KB.Infrastructure.Ioc;
+using Comm100.Domain.Services;
+using Comm100.Domain.Repository;
+using Comm100.Domain.Ioc;
+using Comm100.Domain.Uow;
+using Comm100.Runtime.Exception;
 
 namespace KB.Domain.DomainServices
 {
@@ -19,11 +20,9 @@ namespace KB.Domain.DomainServices
         public IArticleDomainService ArticleDomainService { get; set; }
         [Mandatory]
         public ITagDomainService TagDomainService { get; set; }
-        public ArticleTagDomainService(IRepository<ArticleTag> repository,
-                                        IUnitOfWorkManager unitOfWorkManager):base(unitOfWorkManager)
+        public ArticleTagDomainService(IRepository<ArticleTag> repository)
         {
             _repository = repository;
-            _unitOfWorkManager = unitOfWorkManager;
         }
 
         public Tag AddTag(int articleId, Tag tag)
@@ -43,7 +42,7 @@ namespace KB.Domain.DomainServices
         {
             if(_repository.Exists(e=>e.ArticleId==articleId && e.TagId == tagId))
             {
-                throw new MyException(200009,"关系已经存在，不允许重复添加！");
+                throw new Comm100Exception(200009,"关系已经存在，不允许重复添加！");
             }
              _repository.Insert(new ArticleTag() { ArticleId = articleId, TagId = tagId });
             return TagDomainService.Get(tagId);
@@ -51,8 +50,7 @@ namespace KB.Domain.DomainServices
 
         public void AddTags(int articleId, IList<Tag> tags)
         {
-            using (var uow = _unitOfWorkManager.Begin())
-            {
+          
              
                 var article = ValidateArticle(articleId);
 
@@ -61,8 +59,7 @@ namespace KB.Domain.DomainServices
                     AddTag(article, t);
                 }
 
-                uow.Complete();
-            }
+        
         }
         private Tag AddTag(Article article,Tag tag)
         {

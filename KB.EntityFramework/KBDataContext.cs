@@ -1,6 +1,7 @@
 
+using Comm100.Domain.Ioc;
+using Comm100.Runtime;
 using KB.Domain.Entities;
-using KB.Infrastructure.Ioc;
 using KB.Infrastructure.Runtime.Session;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -68,9 +69,6 @@ namespace KB.EntityFramework
                       entity.ToTable("t_KB_Tag")
                             //.HasQueryFilter(a => a.SiteId == Session.GetSiteId())
                             .HasKey(t => t.Id);
-
-
-
                       entity.HasIndex(t => t.Name).IsUnique();
                   }
                 );

@@ -1,4 +1,4 @@
-﻿using KB.Domain.Uow;
+﻿using Comm100.Domain.Uow;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

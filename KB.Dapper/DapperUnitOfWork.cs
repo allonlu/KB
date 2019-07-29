@@ -1,4 +1,4 @@
-﻿using KB.Domain.Uow;
+﻿using Comm100.Domain.Uow;
 using System;
 using System.Collections.Generic;
 using System.Data;

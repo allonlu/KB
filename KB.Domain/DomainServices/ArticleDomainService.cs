@@ -1,12 +1,14 @@
-﻿using KB.Domain.Entities;
-using KB.Domain.Repositories;
-using KB.Domain.Uow;
-using KB.Infrastructure.Exceptions;
-using KB.Infrastructure.Ioc;
+﻿
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Transactions;
+using KB.Domain.Entities;
+using Comm100.Domain.Services;
+using Comm100.Domain.Repository;
+using Comm100.Domain.Ioc;
+using Comm100.Domain.Uow;
+using Comm100.Runtime.Exception;
 
 namespace KB.Domain.DomainServices
 {
@@ -23,9 +25,8 @@ namespace KB.Domain.DomainServices
         [Mandatory]
         public ICategoryDomainService CategoryDomainService { get; set; }
         public ArticleDomainService(
-            IRepository<Article> articleRepository,
-            IUnitOfWorkManager unitOfWorkManager
-            ):base(unitOfWorkManager)
+            IRepository<Article> articleRepository
+            )
         {
             _articleRepository = articleRepository;
         }
@@ -66,11 +67,11 @@ namespace KB.Domain.DomainServices
         {
             if (CategoryDomainService.Get(article.CategoryId).State != CategoryStateEnum.Audited)
             {
-                throw new MyException(100101, "Article本身的状态不正确，不能进行此操作！");
+                throw new Comm100Exception(100101, "Article本身的状态不正确，不能进行此操作！");
             }
             if (article.State!=ArticleStateEnum.Audited)
             {
-                throw new MyException(100100,"Article本身的状态不正确，不能进行此操作！");
+                throw new Comm100Exception(100100,"Article本身的状态不正确，不能进行此操作！");
             }
             article.State = ArticleStateEnum.Publish;
             _articleRepository.Update(article);

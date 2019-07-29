@@ -2,9 +2,9 @@
 using Castle.MicroKernel;
 using Castle.MicroKernel.Facilities;
 using Castle.MicroKernel.Registration;
+using Comm100.Domain.Repository;
+using Comm100.Domain.Uow;
 using KB.Domain.DomainServices;
-using KB.Domain.Repositories;
-using KB.Domain.Uow;
 using KB.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 

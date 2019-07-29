@@ -1,6 +1,5 @@
 ﻿using KB.Application.Dto.Tags;
 using KB.Domain.Entities;
-using KB.Infrastructure.Constant;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

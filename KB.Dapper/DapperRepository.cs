@@ -1,15 +1,12 @@
-﻿using KB.Domain.Entities;
-using KB.Domain.Repositories;
+﻿
 using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using DapperExtensions.Sql;
-using System.Data;
 using DapperExtensions;
 using KB.Dapper.DapperExpressionExtensions;
+using Comm100.Domain.Repository;
+using Comm100.Domain.Entity;
 
 namespace KB.Dapper
 {

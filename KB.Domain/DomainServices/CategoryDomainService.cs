@@ -4,10 +4,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using KB.Domain.Entities;
-using KB.Domain.Repositories;
-using KB.Domain.Uow;
-using KB.Infrastructure.Exceptions;
-using KB.Infrastructure.Ioc;
+using Comm100.Domain.Services;
+using Comm100.Domain.Repository;
+using Comm100.Domain.Ioc;
+using Comm100.Domain.Uow;
+using Comm100.Runtime.Exception;
 
 namespace KB.Domain.DomainServices
 {

@@ -6,11 +6,10 @@ using KB.Domain.DomainServices;
 using System.Linq;
 using KB.Application.Dto.Tags;
 using System.Collections.Generic;
-using KB.Domain.Uow;
-using KB.Infrastructure.Extension;
-using KB.Infrastructure.Runtime.Authorization;
 using System.Linq.Expressions;
 using System;
+using Comm100.Application.Services;
+using Comm100.Runtime;
 
 namespace KB.Application.AppServices
 {
@@ -24,8 +23,7 @@ namespace KB.Application.AppServices
         private ITagDomainService _tagDomainService;
         public ArticleAppService(IArticleDomainService articleDomainService,
             IArticleTagDomainService articleTagDomainService,
-            IUnitOfWorkManager unitOfWorkMananger,
-            ITagDomainService tagDomainService) :base(unitOfWorkMananger)
+            ITagDomainService tagDomainService) 
         {
             _articleDomainService = articleDomainService;
             _articleTagDomainService = articleTagDomainService;

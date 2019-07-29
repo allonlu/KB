@@ -1,4 +1,5 @@
-﻿using KB.Infrastructure.Constant;
+﻿
+using Comm100.Constants;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,7 @@ namespace KB.Application.Dto.Tags
     public class UpdateTagDto
     {
         [Required]
-        [MaxLength(Constant.MaxNameLength)]
+        [MaxLength(StringLength.MaxNameLength)]
         public string Name { get; set; }
     }
 }

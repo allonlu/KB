@@ -1,18 +1,20 @@
 ﻿using KB.Domain.Entities;
-using KB.Domain.Repositories;
-using KB.Domain.Uow;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using Comm100.Domain.Services;
+using Comm100.Domain.Repository;
+using Comm100.Domain.Ioc;
+using Comm100.Domain.Uow;
+using Comm100.Runtime.Exception;
 
 namespace KB.Domain.DomainServices
 {
     public class TagDomainService :DomainServiceBase, ITagDomainService
     {
         private IRepository<Tag> _repository;
-        public TagDomainService(IRepository<Tag> repository,
-            IUnitOfWorkManager unitOfWorkManager
-            ) : base(unitOfWorkManager)
+        public TagDomainService(IRepository<Tag> repository
+            ) 
         {
             _repository = repository;
         }

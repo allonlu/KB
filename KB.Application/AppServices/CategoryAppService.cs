@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper.QueryableExtensions;
+using Comm100.Application.Services;
+using Comm100.Runtime;
 using KB.Application.Dto.Articles;
 using KB.Application.Dto.Categories;
 using KB.Domain.DomainServices;
 using KB.Domain.Entities;
-using KB.Domain.Uow;
-using KB.Infrastructure.Runtime.Authorization;
 
 namespace KB.Application.AppServices
 {
@@ -16,8 +16,7 @@ namespace KB.Application.AppServices
     {
         private readonly ICategoryDomainService _categoryDomainService;
 
-        public CategoryAppService(ICategoryDomainService categoryDomainService,
-                                    IUnitOfWorkManager unitOfWorkManager):base(unitOfWorkManager)
+        public CategoryAppService(ICategoryDomainService categoryDomainService)
         {
             this._categoryDomainService = categoryDomainService;
         }

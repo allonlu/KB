@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using KB.Domain.Entities;
+using Comm100.Domain.Services;
 
 namespace KB.Domain.DomainServices
 {

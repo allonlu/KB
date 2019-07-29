@@ -1,7 +1,8 @@
 ﻿using Castle.MicroKernel;
 using Castle.MicroKernel.Registration;
+using Comm100.Domain;
+using Comm100.Domain.Services;
 using KB.Domain.DomainServices;
-using KB.Domain.Repositories;
 
 namespace KB.Domain
 {
@@ -9,14 +10,7 @@ namespace KB.Domain
     {
         public static void Init(IKernel kernel)
         {
-            kernel.Register(
-
-                Classes.FromAssemblyContaining<IDomainService>()
-                        .BasedOn<IDomainService>()
-                        .Configure(configurer => configurer.Named(configurer.Implementation.Name))
-                        .WithServiceAllInterfaces()
-                        .LifestyleTransient()
-            );
+            kernel.DomainServiceRegister(typeof(DomainIocInitializer).Assembly);
         }
     }
 }

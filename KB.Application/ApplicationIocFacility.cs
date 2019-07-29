@@ -1,8 +1,7 @@
 ﻿using Castle.Core;
 using Castle.MicroKernel.Facilities;
 using Castle.MicroKernel.Registration;
-using KB.Application.AppServices;
-using KB.Application.Interceptors;
+using Comm100.Application;
 using KB.Domain;
 
 namespace KB.Application
@@ -11,22 +10,8 @@ namespace KB.Application
     {
         protected override void Init()
         {
-           Kernel.Register(
-            Component.For<AppServiceInterceptor>()
-                    .ImplementedBy<AppServiceInterceptor>()
-                    .LifestyleTransient(),
+            Kernel.AppServiceRegister(this.GetType().Assembly);
 
-            Classes.FromAssemblyContaining<IAppService>()
-            .BasedOn<IAppService>()
-            .Configure(configurer =>
-            {
-                configurer.Named(configurer.Implementation.Name);
-                ///注册AOP拦截器
-                _ = configurer.Interceptors(InterceptorReference.ForType<AppServiceInterceptor>()).Anywhere;
-            })
-            .WithServiceAllInterfaces()
-            .LifestyleTransient()
-            );
             DomainIocInitializer.Init(Kernel);
         }
     }

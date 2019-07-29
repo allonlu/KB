@@ -1,4 +1,4 @@
-﻿using KB.Domain.Uow;
+﻿using Comm100.Domain.Uow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace KB.EntityFramework
 
         public void SetSiteId(int siteId)
         {
-            _siteId = 0;
+            _siteId = siteId;
         }
         public int GetSiteId() {
             return _siteId;

@@ -1,4 +1,5 @@
-﻿using KB.Infrastructure.Constant;
+﻿using Comm100.Constants;
+using Comm100.Domain.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,7 @@ namespace KB.Domain.Entities
     public class Category : BaseSiteEntity, IDeletion
     {
         [Required]
-        [MaxLength(Constant.MaxNameLength)]
+        [MaxLength(StringLength.MaxNameLength)]
         public string Name { get; set; }
 
 

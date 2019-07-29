@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Comm100.Application.Services;
+using Comm100.Runtime;
 using KB.Application.Dto.Tags;
 using KB.Domain.DomainServices;
 using KB.Domain.Entities;
-using KB.Domain.Uow;
 using KB.Infrastructure.Runtime.Authorization;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,9 @@ namespace KB.Application.AppServices
     public class TagAppService : AppServiceBase, ITagAppService
     {
         private ITagDomainService _tagDomainService;
-        public TagAppService(ITagDomainService tagDomainService,
-                            IUnitOfWorkManager unitOfWorkManager
+        public TagAppService(ITagDomainService tagDomainService
             
-            ):base(unitOfWorkManager)
+            )
         {
             _tagDomainService = tagDomainService;
         }

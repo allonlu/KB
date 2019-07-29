@@ -1,4 +1,5 @@
-﻿using KB.Infrastructure.Constant;
+﻿
+using Comm100.Constants;
 using System.ComponentModel.DataAnnotations;
 
 namespace KB.Application.Dto.Tags
@@ -10,7 +11,7 @@ namespace KB.Application.Dto.Tags
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(Constant.MaxNameLength)]
+        [MaxLength(StringLength.MaxNameLength)]
         public string Name { get; set; }
     }
 }

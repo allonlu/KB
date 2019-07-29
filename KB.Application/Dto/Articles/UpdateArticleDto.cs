@@ -1,5 +1,5 @@
-﻿using KB.Domain.Entities;
-using KB.Infrastructure.Constant;
+﻿using Comm100.Constants;
+using KB.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +10,10 @@ namespace KB.Application.Dto.Articles
     public class UpdateArticleDto
     {
         [Required]
-        [MaxLength(Constant.MaxNameLength)]
+        [MaxLength(StringLength.MaxNameLength)]
         public string Title { get; set; }
 
-        [MaxLength(Constant.MaxNameLength)]
+        [MaxLength(StringLength.MaxNameLength)]
         public string Description { get; set; }
 
         [Required]

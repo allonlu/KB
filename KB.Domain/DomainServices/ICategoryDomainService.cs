@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using Comm100.Domain.Services;
 
 namespace KB.Domain.DomainServices
 {

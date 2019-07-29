@@ -1,9 +1,11 @@
+using Comm100.Domain.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KB.Domain.Entities
 {
-    public class ArticleTag : IEntity,IBelongToSite
+    [TableSwitch]
+    public class ArticleTag : IEntity
     {
         [Key]
         public int Id { get; set; }

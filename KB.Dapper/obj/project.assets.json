@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
-      "Castle.Core/4.3.1": {
+      "Castle.Core/4.4.0": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.1",
@@ -54,6 +54,19 @@
         },
         "runtime": {
           "lib/netstandard1.6/Castle.Windsor.dll": {}
+        }
+      },
+      "Comm100/1.0.1-alpha": {
+        "type": "package",
+        "dependencies": {
+          "Castle.Core": "4.4.0",
+          "Castle.Windsor": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Comm100.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Comm100.dll": {}
         }
       },
       "Dapper/1.60.6": {
@@ -3281,7 +3294,8 @@
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
           "Castle.Facilities.AspNetCore": "5.0.0",
-          "Castle.Windsor": "5.0.0"
+          "Castle.Windsor": "5.0.0",
+          "Comm100": "1.0.1-alpha"
         },
         "compile": {
           "bin/placeholder/KB.Infrastructure.dll": {}
@@ -3293,17 +3307,17 @@
     }
   },
   "libraries": {
-    "Castle.Core/4.3.1": {
-      "sha512": "8Y/eTr6GTElAGV7eAmJuhfLhGdFpNvaNrQ9UQYDScziLmX+/BLGM+9eQr0IcdNDcPN0ADmbtwT6MgecGKy4obw==",
+    "Castle.Core/4.4.0": {
+      "sha512": "b5rRL5zeaau1y/5hIbI+6mGw3cwun16YjkHZnV9RRT5UyUIFsgLmNXJ0YnIN9p8Hw7K7AbG1q1UclQVU3DinAQ==",
       "type": "package",
-      "path": "castle.core/4.3.1",
+      "path": "castle.core/4.4.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "ASL - Apache Software Foundation License.txt",
         "CHANGELOG.md",
         "LICENSE",
-        "castle.core.4.3.1.nupkg.sha512",
+        "castle.core.4.4.0.nupkg.sha512",
         "castle.core.nuspec",
         "lib/net35/Castle.Core.dll",
         "lib/net35/Castle.Core.xml",
@@ -3350,6 +3364,17 @@
         "lib/net45/Castle.Windsor.xml",
         "lib/netstandard1.6/Castle.Windsor.dll",
         "lib/netstandard1.6/Castle.Windsor.xml"
+      ]
+    },
+    "Comm100/1.0.1-alpha": {
+      "sha512": "czdYhbkBapu3/P5/hrwNjvl7LprB+i8W9u9CnVVJSq3v+ZvKjdIi1UJiXuIBeFt2RhUv8n1TWfFwTupMqapZGQ==",
+      "type": "package",
+      "path": "comm100/1.0.1-alpha",
+      "files": [
+        ".nupkg.metadata",
+        "comm100.1.0.1-alpha.nupkg.sha512",
+        "comm100.nuspec",
+        "lib/netstandard2.0/Comm100.dll"
       ]
     },
     "Dapper/1.60.6": {
@@ -9571,6 +9596,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "E:\\Code\\Comm100\\Comm100\\bin\\Release": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

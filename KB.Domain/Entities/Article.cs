@@ -1,19 +1,21 @@
+
+using Comm100.Constants;
+using Comm100.Domain.Entity;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 namespace KB.Domain.Entities
 {
-    using KB.Infrastructure.Constant;
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-
-    public class Article :BaseSiteEntity
+    [TableSwitch]
+    public class Article : BaseSiteEntity
     {
 
 
         [Required]
-        [MaxLength(Constant.MaxNameLength)]
+        [MaxLength(StringLength.MaxNameLength)]
         public string Title { get; set; }
-        [MaxLength(Constant.MaxDescLength)]
+        [MaxLength(StringLength.MaxDescLength)]
         public string Description { get; set; }
         public ArticleStateEnum State { get; set; }
         public int CategoryId { get; set; }

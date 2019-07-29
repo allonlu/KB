@@ -1,4 +1,5 @@
-﻿using DapperExtensions;
+﻿using Comm100.Domain.Entity;
+using DapperExtensions;
 using JetBrains.Annotations;
 using KB.Domain.Entities;
 using System;

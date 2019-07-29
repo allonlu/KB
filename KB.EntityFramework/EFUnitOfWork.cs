@@ -1,5 +1,6 @@
-﻿using KB.Domain.Entities;
-using KB.Domain.Uow;
+﻿using Comm100.Domain.Entity;
+using Comm100.Domain.Uow;
+using KB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -60,7 +61,7 @@ namespace KB.EntityFramework
             foreach (IEntityType entityType in _dbContext.Model.GetEntityTypes())
             {
                 ///如果entity继承IBelongToSite接口，就会更换表名
-                if (typeof(IBelongToSite).IsAssignableFrom(entityType.ClrType))
+                if (entityType.ClrType.GetCustomAttributes(true).OfType<TableSwitchAttribute>().Any())
                 {
                     if (entityType.Relational() is RelationalEntityTypeAnnotations relational)
                     {

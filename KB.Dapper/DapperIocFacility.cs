@@ -1,7 +1,7 @@
 ﻿using Castle.MicroKernel.Facilities;
 using Castle.MicroKernel.Registration;
-using KB.Domain.Repositories;
-using KB.Domain.Uow;
+using Comm100.Domain.Repository;
+using Comm100.Domain.Uow;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
