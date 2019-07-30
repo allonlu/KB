@@ -1,6 +1,5 @@
 ﻿using Comm100.Domain.Entity;
 using Comm100.Domain.Repository;
-using KB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

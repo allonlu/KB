@@ -9,7 +9,7 @@ namespace KB.Web.Host.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DefaultController : ControllerBase
+    public class DefaultController : Controller
     {
         // GET: api/Default
         [HttpGet]

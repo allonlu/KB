@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Comm100.Web.Controllers;
 using KB.Application.AppServices;
 using KB.Application.Dto.Categories;
 using Microsoft.AspNetCore.Http;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KB.Web.Host.Controllers
 {
-    public class CategoryController : ControllerBase
+    public class CategoryController : Comm100ControllerBase
     {
         private readonly ICategoryAppService _categoryAppService;
 

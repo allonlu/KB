@@ -1,4 +1,5 @@
-﻿using KB.Application.AppServices;
+﻿using Comm100.Web.Controllers;
+using KB.Application.AppServices;
 using KB.Application.Dto.Articles;
 using KB.Application.Dto.Tags;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace KB.Web.Host.Controllers
 {
-    public class ArticleController : ControllerBase
+    public class ArticleController : Comm100ControllerBase
     {
         private IArticleAppService _articleAppService;
         private readonly ICategoryAppService _categoryAppService;

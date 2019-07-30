@@ -1,6 +1,5 @@
 ﻿using Comm100.Domain.Entity;
 using DapperExtensions;
-using KB.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -7,9 +7,9 @@ using Castle.Facilities.AspNetCore;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using Castle.Windsor.MsDependencyInjection;
+using Comm100.Web.Filters;
 using KB.Application;
 using KB.Web.Host.Controllers;
-using KB.Web.Host.Filters;
 using KB.Web.Host.Ioc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -65,7 +65,7 @@ namespace KB.Web.Host
             );
 
             services.AddMvc(options=> {
-                options.Filters.Add(typeof(MyExceptionFilter));
+                options.Filters.Add(typeof(Comm100ExceptionFilter));
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             return services.AddWindsor(Container,

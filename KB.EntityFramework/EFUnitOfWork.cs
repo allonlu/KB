@@ -1,6 +1,5 @@
 ﻿using Comm100.Domain.Entity;
 using Comm100.Domain.Uow;
-using KB.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage;

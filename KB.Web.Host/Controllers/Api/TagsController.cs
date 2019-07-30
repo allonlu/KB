@@ -8,13 +8,14 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Comm100.Extension;
+using Comm100.Web.Controllers;
 
 namespace KB.Web.Host.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors]
-    public class TagsController : ControllerBase
+    public class TagsController : Comm100ControllerBase
     {
         private readonly ITagAppService _tagAppService;
 

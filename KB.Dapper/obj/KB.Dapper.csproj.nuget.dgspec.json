@@ -25,7 +25,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "E:\\Code\\Comm100\\Comm100\\bin\\Release": {},
+          "E:\\Nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,7 +44,7 @@
           "dependencies": {
             "Comm100": {
               "target": "Package",
-              "version": "[1.0.2-alpha, )"
+              "version": "[0.0.0.2-alpha, )"
             },
             "Dapper": {
               "target": "Package",

@@ -53,7 +53,7 @@
           "lib/netstandard1.6/Castle.Windsor.dll": {}
         }
       },
-      "Comm100/1.0.2-alpha": {
+      "Comm100/0.0.0.2-alpha": {
         "type": "package",
         "dependencies": {
           "AutoMapper": "8.1.1",
@@ -1323,13 +1323,13 @@
         "lib/netstandard1.6/Castle.Windsor.xml"
       ]
     },
-    "Comm100/1.0.2-alpha": {
-      "sha512": "MnFgWd4EtiCG3kRsGB2Yvnsr1NNdpG8XOYYK9flZWEUWkjKbdqHcjcQ3LBSbh2KYFgqqYULcXkyzQy/xLyOMgA==",
+    "Comm100/0.0.0.2-alpha": {
+      "sha512": "FWUTsP3dIjk7Fm+cgxiIpX+glxBzgL097v/omgt0snNylvIHk/sZwvb7WDpSI5Q44D/MPHFLYtQqzSqtGgWegw==",
       "type": "package",
-      "path": "comm100/1.0.2-alpha",
+      "path": "comm100/0.0.0.2-alpha",
       "files": [
         ".nupkg.metadata",
-        "comm100.1.0.2-alpha.nupkg.sha512",
+        "comm100.0.0.0.2-alpha.nupkg.sha512",
         "comm100.nuspec",
         "lib/netstandard2.0/Comm100.dll"
       ]
@@ -4906,7 +4906,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "Comm100 >= 1.0.2-alpha",
+      "Comm100 >= 0.0.0.2-alpha",
       "Dapper >= 1.60.6",
       "DapperExtensions.DotnetCore >= 1.0.1",
       "JetBrains.Annotations >= 2019.1.3",
@@ -4938,7 +4938,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "E:\\Code\\Comm100\\Comm100\\bin\\Release": {},
+        "E:\\Nuget": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4957,7 +4957,7 @@
         "dependencies": {
           "Comm100": {
             "target": "Package",
-            "version": "[1.0.2-alpha, )"
+            "version": "[0.0.0.2-alpha, )"
           },
           "Dapper": {
             "target": "Package",

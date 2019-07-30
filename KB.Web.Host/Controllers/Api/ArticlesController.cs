@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Comm100.Extension;
+using Comm100.Web.Controllers;
 using KB.Application.AppServices;
 using KB.Application.Dto.Articles;
 using KB.Application.Dto.Tags;
@@ -16,7 +17,7 @@ namespace KB.Web.Host.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors]
-    public class ArticlesController : ControllerBase
+    public class ArticlesController : Comm100ControllerBase
     {
         private IArticleAppService _articleAppService;
         public ArticlesController(IArticleAppService articleAppService)
