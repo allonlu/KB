@@ -13,21 +13,19 @@ using Comm100.Runtime.Exception;
 namespace KB.Domain.DomainServices
 {
 
-    public class CategoryDomainService :DomainServiceBase, ICategoryDomainService
+    public class CategoryDomainService : DomainServiceBase, ICategoryDomainService
     {
         private readonly IRepository<Category> _repository;
-        private readonly IRepository<Article> _articleRepository;
+        private readonly IRepository<Article> _articlRepository;
 
-        [Mandatory]
-        public  IArticleDomainService ArticleDomainService { get; set; }
-        public CategoryDomainService(IRepository<Category> repository, IRepository<Article> articleRepository)
+        public CategoryDomainService(IRepository<Category> repository, IRepository<Article> articlRepository)
         {
             this._repository = repository;
-            this._articleRepository = articleRepository;
+            this._articlRepository = articlRepository;
         }
         public int Delete(Category category)
         {
-           return _repository.Delete(category);
+            return _repository.Delete(category);
         }
 
         public int Delete(int id)
@@ -37,16 +35,16 @@ namespace KB.Domain.DomainServices
 
         public Category Get(int id)
         {
-            var entity= _repository.Get(id);
+            var entity = _repository.Get(id);
             if (entity == null)
                 throw new EntityNotFoundException(id, typeof(Category));
-            entity.Articles = ArticleDomainService.GetAll(e => e.CategoryId == entity.Id).ToList();
+            entity.Articles = _articlRepository.GetAll(e => e.CategoryId == entity.Id).ToList();
             return entity;
         }
 
 
 
-        public IQueryable<Category> GetAll(Expression<Func<Category,bool>> predicate)
+        public IQueryable<Category> GetAll(Expression<Func<Category, bool>> predicate)
         {
             return _repository.GetAll(predicate);
         }
@@ -63,7 +61,7 @@ namespace KB.Domain.DomainServices
 
         public IQueryable<Article> GetArticles(int categoryId)
         {
-            return _articleRepository.GetAll(e => e.CategoryId == categoryId);
+            return _articlRepository.GetAll(e => e.CategoryId == categoryId);
         }
     }
 }

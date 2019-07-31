@@ -8,7 +8,7 @@
     <PackageReference Include="AutoMapper" Version="8.1.1" />
     <PackageReference Include="Castle.Facilities.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Castle.Windsor" Version="5.0.0" />
-    <PackageReference Include="Comm100" Version="0.0.0.7-alpha" />
+    <PackageReference Include="Comm100" Version="0.0.0.9-alpha" />
   </ItemGroup>
 
   <ItemGroup>

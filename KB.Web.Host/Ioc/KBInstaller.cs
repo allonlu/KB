@@ -13,10 +13,11 @@ namespace KB.Web.Host.Ioc
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
-            //container.AddFacility<Comm100IocFacility>();
+
+            container.AddFacility<Comm100IocFacility>();
             container.AddFacility<ApplicationIocFacility>();
-            //container.AddFacility<EntityFrameworkIocFacility>();
-            container.AddFacility<DapperIocFacility>();
+            container.AddFacility<EntityFrameworkIocFacility>();
+            //container.AddFacility<DapperIocFacility>();
             container.AddFacility<InfrastructureIocFacility>();
         }
     }

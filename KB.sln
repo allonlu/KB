@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KB.EntityFramework", "KB.En
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KB.Infrastructure", "KB.Infrastructure\KB.Infrastructure.csproj", "{6617A3DC-3294-427A-A405-8ECF65EAE2F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KB.Dapper", "KB.Dapper\KB.Dapper.csproj", "{72237431-2DB8-4443-A4F8-E75E26EC025D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KB.Dapper", "KB.Dapper\KB.Dapper.csproj", "{72237431-2DB8-4443-A4F8-E75E26EC025D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

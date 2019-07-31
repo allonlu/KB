@@ -55,7 +55,6 @@ namespace KB.Application.AppServices
         {
             
                 int delCount =_articleDomainService.Delete(articleId);
-
                 return delCount;
         }
         [Permission("Article.Get")]
@@ -71,15 +70,15 @@ namespace KB.Application.AppServices
         
         
         [Permission("Article.Get")]
-        public PagedResultDto<ArticleDto> GetList(QueryArticleInput dto)
+        public IPagedResult<ArticleDto> GetList(QueryArticleInput dto)
         {
 
-            return _articleDomainService.GetList(dto).MapTo<ArticleDto>();
+            return _articleDomainService.GetList(dto).MapTo<Article,ArticleDto>();
 
         }
         
         [Permission("Article.Get.Tag")]
-        public PagedResultDto<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto)
+        public IPagedResult<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto)
         {
 
             var list = _articleDomainService.GetList(dto);

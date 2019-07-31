@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v2.2": {
       "KB.Dapper/1.0.0": {
         "dependencies": {
-          "Comm100": "0.0.0.7-alpha",
+          "Comm100": "0.0.0.9-alpha",
           "Dapper": "1.60.6",
           "DapperExtensions.DotnetCore": "1.0.1",
           "JetBrains.Annotations": "2019.1.3"
@@ -63,7 +63,7 @@
           }
         }
       },
-      "Comm100/0.0.0.7-alpha": {
+      "Comm100/0.0.0.9-alpha": {
         "dependencies": {
           "AutoMapper": "8.1.1",
           "Castle.Core": "4.4.0",
@@ -72,8 +72,8 @@
         },
         "runtime": {
           "lib/netstandard2.0/Comm100.dll": {
-            "assemblyVersion": "0.0.0.7",
-            "fileVersion": "0.0.0.7"
+            "assemblyVersion": "0.0.0.9",
+            "fileVersion": "0.0.0.9"
           }
         }
       },
@@ -684,12 +684,12 @@
       "path": "castle.windsor/5.0.0",
       "hashPath": "castle.windsor.5.0.0.nupkg.sha512"
     },
-    "Comm100/0.0.0.7-alpha": {
+    "Comm100/0.0.0.9-alpha": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ShJr/h8Gzsyu2Fi1bzgb/sUfzCmf3RWTI2QOzWZnlZ0mq/OO3lRb4QCcckiT/WmYj7Yc5ymrN3kbjJfqHfQJFQ==",
-      "path": "comm100/0.0.0.7-alpha",
-      "hashPath": "comm100.0.0.0.7-alpha.nupkg.sha512"
+      "sha512": "sha512-7TgkfC7crojpyeLM7i1w/Nq8rk7JQL9m7emwdMTprAwNCGACRUj34pnJXvbpXBMWrFmZEI/NXthuHlEHjkngHA==",
+      "path": "comm100/0.0.0.9-alpha",
+      "hashPath": "comm100.0.0.0.9-alpha.nupkg.sha512"
     },
     "Dapper/1.60.6": {
       "type": "package",

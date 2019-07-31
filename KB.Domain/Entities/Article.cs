@@ -20,7 +20,7 @@ namespace KB.Domain.Entities
         public ArticleStateEnum State { get; set; }
         public int CategoryId { get; set; }
         //public virtual ICollection<Tag> Tags { get; set; }
-        //public virtual Category Category { get; set; }
+        public virtual Category Category { get; set; }
 
     }
 }

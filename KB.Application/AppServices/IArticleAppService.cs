@@ -12,8 +12,8 @@ namespace KB.Application.AppServices
         ArticleDto Get(int id);
         ArticleWithTagsDto GetWithTags(int Id);
 
-        PagedResultDto<ArticleDto> GetList(QueryArticleInput dto);
-        PagedResultDto<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto);
+        IPagedResult<ArticleDto> GetList(QueryArticleInput dto);
+        IPagedResult<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto);
         int Delete(int articleId);
         ArticleDto Update(ArticleDto dto);
         ArticleDto Add(AddArticleDto dto);

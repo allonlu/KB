@@ -18,9 +18,7 @@ namespace KB.Domain.DomainServices
         public readonly IRepository<ArticleTag> _repository;
         private readonly IRepository<Article> _articleRepository;
 
-        [Mandatory]
         public IArticleDomainService ArticleDomainService { get; set; }
-        [Mandatory]
         public ITagDomainService TagDomainService { get; set; }
         public ArticleTagDomainService(IRepository<ArticleTag> repository, IRepository<Article> articleRepository)
         {
@@ -131,7 +129,5 @@ namespace KB.Domain.DomainServices
         {
             return _repository.Delete(e => e.TagId == tagId);
         }
-
-
     }
 }

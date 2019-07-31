@@ -11,12 +11,8 @@ using System.Threading.Tasks;
 
 namespace KB.Application.Dto.Articles
 {
-   public class QueryArticleInput:SortingAndPagedRequestDto,IQueryArticleDto
+   public class QueryArticleInput:QueryArticleDto
     {
-        public int? ArticleId { get; set; }
 
-        [MaxLength(StringLength.MaxNameLength)]
-        public string Title { get; set; }
-        public int? CategoryId { get; set; }
     }
 }

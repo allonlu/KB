@@ -21,14 +21,7 @@ namespace KB.Domain.DomainServices
         private readonly IRepository<Article> _articleRepository;
         private readonly IRepository<ArticleTag> _articleTagRepository;
 
-        //[Mandatory]
-        //public IArticleTagDomainService ArticleTagDomainService { get; set; }
-
-        [Mandatory]
-        public ITagDomainService TagDomainService { get; set; }
-
-        [Mandatory]
-        public ICategoryDomainService CategoryDomainService { get; set; }
+        public virtual ICategoryDomainService CategoryDomainService { get; set; }
 
         public ArticleDomainService(IRepository<Article> articleRepository,
             IRepository<ArticleTag> articleTagRepository)
@@ -40,13 +33,14 @@ namespace KB.Domain.DomainServices
         public int Delete(int articleId)
         {
             var delCount=  _articleRepository.Delete(articleId);
-            delCount += _articleTagRepository.Delete(e=>e.ArticleId==articleId);
+            delCount += _articleTagRepository.Delete(e => e.ArticleId == articleId);
             return delCount;
         }
 
         public int Delete(Article entity)
         {
-            var delCount = _articleRepository.Delete(entity);
+            var delCount = Delete(entity.Id);
+
             return delCount;
 
         }
@@ -59,7 +53,7 @@ namespace KB.Domain.DomainServices
             return entity;
         }
 
-        public PagedResultDto<Article> GetList(IQueryArticleDto dto)
+        public IPagedResult<Article> GetList(QueryArticleDto dto)
         {
 
             Expression<Func<Article, bool>> expression = null;
@@ -75,7 +69,6 @@ namespace KB.Domain.DomainServices
             }
             var totalCount = _articleRepository.Count(expression);
             var query= _articleRepository.GetAll(expression);
-            CategoryDomainService.Get(0);
             return new PagedResultDto<Article>(totalCount, query.ToList());
 
         }

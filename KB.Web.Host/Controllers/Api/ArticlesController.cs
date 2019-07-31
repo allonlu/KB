@@ -52,13 +52,13 @@ namespace KB.Web.Host.Controllers
         //}
 
        [HttpGet]
-        public PagedResultDto<ArticleDto> GetList([FromQuery] QueryArticleInput dto)
+        public IPagedResult<ArticleDto> GetList([FromQuery] QueryArticleInput dto)
         {
             return _articleAppService.GetList(dto);
         }
 
         [HttpGet("~/api/[controller]:withTags")]
-        public PagedResultDto<ArticleWithTagsDto> GetListWithTags([FromQuery] QueryArticleInput dto)
+        public IPagedResult<ArticleWithTagsDto> GetListWithTags([FromQuery] QueryArticleInput dto)
         {
             return _articleAppService.GetListWithTags(dto);
 
