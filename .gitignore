@@ -3,13 +3,15 @@
 ################################################################################
 
 /.vs/KB
-/KB.Application/bin/Debug/netcoreapp2.2
+/KB.Application/bin
 /KB.Application/obj
-/KB.Domain/bin/Debug/netcoreapp2.2
+/KB.Domain/bin
 /KB.Domain/obj
-/KB.EntityFramework/bin/Debug/netcoreapp2.2
+/KB.EntityFramework/bin
 /KB.EntityFramework/obj
-/KB.Infrastructure/bin/Debug
+/KB.Infrastructure/bin
 /KB.Infrastructure/obj
-/KB.Web.Host/bin/Debug/netcoreapp2.2
+/KB.Web.Host/bin
 /KB.Web.Host/obj
+/KB.Dapper/bin
+/KB.Dapper/obj

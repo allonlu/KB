@@ -9571,6 +9571,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "E:\\Nuget": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
