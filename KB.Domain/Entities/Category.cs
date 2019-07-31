@@ -20,7 +20,7 @@ namespace KB.Domain.Entities
 
         public bool IsDeleted { get; set; }
 
-        //public virtual ICollection<Article> Articles { get; set; }
+        public virtual ICollection<Article> Articles { get; set; }
 
 
     }

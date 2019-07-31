@@ -84,6 +84,11 @@ namespace KB.EntityFramework
         {
             return GetAll(predicate).Any();
         }
+
+        public int Count(Expression<Func<TEntity, bool>> predicate)
+        {
+            return _dataSet.Count(predicate);
+        }
     }
     }
 

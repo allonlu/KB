@@ -15,14 +15,17 @@ namespace KB.Domain.DomainServices
 {
     public class ArticleTagDomainService :DomainServiceBase, IArticleTagDomainService
     {
-        public IRepository<ArticleTag> _repository;
+        public readonly IRepository<ArticleTag> _repository;
+        private readonly IRepository<Article> _articleRepository;
+
         [Mandatory]
         public IArticleDomainService ArticleDomainService { get; set; }
         [Mandatory]
         public ITagDomainService TagDomainService { get; set; }
-        public ArticleTagDomainService(IRepository<ArticleTag> repository)
+        public ArticleTagDomainService(IRepository<ArticleTag> repository, IRepository<Article> articleRepository)
         {
-            _repository = repository;
+            this._repository = repository;
+            this._articleRepository = articleRepository;
         }
 
         public Tag AddTag(int articleId, Tag tag)
@@ -95,7 +98,7 @@ namespace KB.Domain.DomainServices
         public IQueryable<Article> GetArticles(int tagId)
         {
             var query = from at in _repository.GetAll(e=>e.TagId == tagId)
-                        join t in ArticleDomainService.GetAll(null) on at.ArticleId equals t.Id
+                        join t in _articleRepository.GetAll(null) on at.ArticleId equals t.Id
                         select t;
             return query;
         }

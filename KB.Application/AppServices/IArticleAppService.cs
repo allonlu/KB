@@ -1,4 +1,5 @@
 ﻿using Comm100.Application.Services;
+using Comm100.Runtime.Dto;
 using KB.Application.Dto.Articles;
 using KB.Application.Dto.Tags;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace KB.Application.AppServices
         ArticleDto Get(int id);
         ArticleWithTagsDto GetWithTags(int Id);
 
-        IList<ArticleDto> GetList(QueryArticleInput dto);
-        IList<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto);
+        PagedResultDto<ArticleDto> GetList(QueryArticleInput dto);
+        PagedResultDto<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto);
         int Delete(int articleId);
         ArticleDto Update(ArticleDto dto);
         ArticleDto Add(AddArticleDto dto);

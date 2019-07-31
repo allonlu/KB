@@ -1,6 +1,7 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.MicroKernel.SubSystems.Configuration;
 using Castle.Windsor;
+using Comm100;
 using KB.Application;
 using KB.Dapper;
 using KB.EntityFramework;
@@ -12,6 +13,7 @@ namespace KB.Web.Host.Ioc
     {
         public void Install(IWindsorContainer container, IConfigurationStore store)
         {
+            //container.AddFacility<Comm100IocFacility>();
             container.AddFacility<ApplicationIocFacility>();
             //container.AddFacility<EntityFrameworkIocFacility>();
             container.AddFacility<DapperIocFacility>();

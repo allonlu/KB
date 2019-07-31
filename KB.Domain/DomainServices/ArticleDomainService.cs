@@ -9,32 +9,38 @@ using Comm100.Domain.Repository;
 using Comm100.Domain.Ioc;
 using Comm100.Domain.Uow;
 using Comm100.Runtime.Exception;
+using System.Collections.Generic;
+using KB.Domain.DomainServices.Dto;
+using Comm100.Extension;
+using Comm100.Runtime.Dto;
 
 namespace KB.Domain.DomainServices
 {
     public class ArticleDomainService : DomainServiceBase, IArticleDomainService
     {
-        private IRepository<Article> _articleRepository;
+        private readonly IRepository<Article> _articleRepository;
+        private readonly IRepository<ArticleTag> _articleTagRepository;
 
-        [Mandatory]
-        public IArticleTagDomainService ArticleTagDomainService { get; set; }
+        //[Mandatory]
+        //public IArticleTagDomainService ArticleTagDomainService { get; set; }
 
         [Mandatory]
         public ITagDomainService TagDomainService { get; set; }
 
         [Mandatory]
         public ICategoryDomainService CategoryDomainService { get; set; }
-        public ArticleDomainService(
-            IRepository<Article> articleRepository
-            )
+
+        public ArticleDomainService(IRepository<Article> articleRepository,
+            IRepository<ArticleTag> articleTagRepository)
         {
-            _articleRepository = articleRepository;
+            this._articleRepository = articleRepository;
+            this._articleTagRepository = articleTagRepository;
         }
 
         public int Delete(int articleId)
         {
             var delCount=  _articleRepository.Delete(articleId);
-            delCount += ArticleTagDomainService.DeleteByArticle(articleId);
+            delCount += _articleTagRepository.Delete(e=>e.ArticleId==articleId);
             return delCount;
         }
 
@@ -53,9 +59,25 @@ namespace KB.Domain.DomainServices
             return entity;
         }
 
-        public IQueryable<Article> GetAll(Expression<Func<Article, bool>> predicate)
+        public PagedResultDto<Article> GetList(IQueryArticleDto dto)
         {
-            return _articleRepository.GetAll(predicate);
+
+            Expression<Func<Article, bool>> expression = null;
+
+            if (!string.IsNullOrEmpty(dto.Title))
+            {
+                expression = e => e.Title.Contains(dto.Title);
+            }
+
+            if(dto.ArticleId.HasValue)
+            {
+                expression = e => e.Id == dto.ArticleId.Value;
+            }
+            var totalCount = _articleRepository.Count(expression);
+            var query= _articleRepository.GetAll(expression);
+            CategoryDomainService.Get(0);
+            return new PagedResultDto<Article>(totalCount, query.ToList());
+
         }
 
         public Article Add(Article entity)
@@ -81,6 +103,11 @@ namespace KB.Domain.DomainServices
         public Article Update(Article entity)
         {
             return _articleRepository.Update(entity);
+        }
+
+        public IQueryable<Article> GetAll(Expression<Func<Article, bool>> predicate = null)
+        {
+            return _articleRepository.GetAll(predicate);
         }
     }
 }

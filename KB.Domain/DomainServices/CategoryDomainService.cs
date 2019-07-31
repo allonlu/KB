@@ -15,13 +15,15 @@ namespace KB.Domain.DomainServices
 
     public class CategoryDomainService :DomainServiceBase, ICategoryDomainService
     {
-        private IRepository<Category> _repository;
+        private readonly IRepository<Category> _repository;
+        private readonly IRepository<Article> _articleRepository;
 
         [Mandatory]
         public  IArticleDomainService ArticleDomainService { get; set; }
-        public CategoryDomainService(IRepository<Category> repository)
-        { 
-            _repository = repository;
+        public CategoryDomainService(IRepository<Category> repository, IRepository<Article> articleRepository)
+        {
+            this._repository = repository;
+            this._articleRepository = articleRepository;
         }
         public int Delete(Category category)
         {
@@ -38,6 +40,7 @@ namespace KB.Domain.DomainServices
             var entity= _repository.Get(id);
             if (entity == null)
                 throw new EntityNotFoundException(id, typeof(Category));
+            entity.Articles = ArticleDomainService.GetAll(e => e.CategoryId == entity.Id).ToList();
             return entity;
         }
 
@@ -60,7 +63,7 @@ namespace KB.Domain.DomainServices
 
         public IQueryable<Article> GetArticles(int categoryId)
         {
-            return ArticleDomainService.GetAll(e => e.CategoryId == categoryId);
+            return _articleRepository.GetAll(e => e.CategoryId == categoryId);
         }
     }
 }

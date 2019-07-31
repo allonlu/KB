@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Comm100.Extension;
+using Comm100.Runtime.Dto;
 using Comm100.Web.Controllers;
 using KB.Application.AppServices;
 using KB.Application.Dto.Articles;
@@ -51,13 +52,13 @@ namespace KB.Web.Host.Controllers
         //}
 
        [HttpGet]
-        public IList<ArticleDto> GetList([FromQuery] QueryArticleInput dto)
+        public PagedResultDto<ArticleDto> GetList([FromQuery] QueryArticleInput dto)
         {
             return _articleAppService.GetList(dto);
         }
 
         [HttpGet("~/api/[controller]:withTags")]
-        public IList<ArticleWithTagsDto> GetListWithTags([FromQuery] QueryArticleInput dto)
+        public PagedResultDto<ArticleWithTagsDto> GetListWithTags([FromQuery] QueryArticleInput dto)
         {
             return _articleAppService.GetListWithTags(dto);
 

@@ -44,7 +44,7 @@
           "dependencies": {
             "Comm100": {
               "target": "Package",
-              "version": "[0.0.0.2-alpha, )"
+              "version": "[0.0.0.7-alpha, )"
             },
             "Dapper": {
               "target": "Package",

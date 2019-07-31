@@ -11,6 +11,8 @@ using System;
 using Comm100.Application.Services;
 using Comm100.Runtime;
 using Comm100.Extension;
+using Comm100.Runtime.Dto;
+using System.Linq.Dynamic.Core;
 
 namespace KB.Application.AppServices
 {
@@ -65,44 +67,32 @@ namespace KB.Application.AppServices
           
         }
 
-        private IQueryable<Article> Query(QueryArticleInput dto)
-        {
-            Expression<Func<Article, bool>> expression=null;
-
-            if (!string.IsNullOrEmpty(dto.Title))
-            {
-                expression = e => e.Title.Contains(dto.Title);
-            }
- 
-            return _articleDomainService.GetAll(expression);
-                            
-        }
+              
+        
         
         [Permission("Article.Get")]
-        public IList<ArticleDto> GetList(QueryArticleInput dto)
+        public PagedResultDto<ArticleDto> GetList(QueryArticleInput dto)
         {
-            
-                var query = Query(dto).OrderBy(e => e.Id);
 
-                return query.ProjectTo<ArticleDto>().ToList();
-         
+            return _articleDomainService.GetList(dto).MapTo<ArticleDto>();
 
         }
         
         [Permission("Article.Get.Tag")]
-        public IList<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto)
+        public PagedResultDto<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto)
         {
 
-            var list = Query(dto).ToList();
-            var query1 = list.Select(
-                                     t=> new ArticleWithTagsDto()
-                                     {
-                                         Id = t.Id,
-                                         Title = t.Title,
-                                         Description = t.Description,
-                                         Tags = _articleTagDomainService.GetTags(t.Id).ProjectTo<TagDto>().ToList()
-                                     });
-            return query1.ToList();
+            var list = _articleDomainService.GetList(dto);
+
+            var query1 = list.Items.Select(
+                                t=> new ArticleWithTagsDto()
+                                {
+                                    Id = t.Id,
+                                    Title = t.Title,
+                                    Description = t.Description,
+                                    Tags = _articleTagDomainService.GetTags(t.Id).ProjectTo<TagDto>().ToList()
+                                });
+            return new PagedResultDto<ArticleWithTagsDto>(list.TotalCount, query1.ToList());
         }
 
         [Permission("Article.Tag.Get")]

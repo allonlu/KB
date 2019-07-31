@@ -18,6 +18,13 @@ namespace KB.Dapper
             _dbConnection = dbConnection;
            
         }
+
+        public int Count(Expression<Func<T, bool>> predicate)
+        {
+            var p = predicate.ToPredicateGroup<T>();
+            return _dbConnection.Count<T>(p);
+        }
+
         public int Delete(int id)
         {
             var predicate = Predicates.Field<T>(f => f.Id, Operator.Eq, id);

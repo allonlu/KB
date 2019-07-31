@@ -23,7 +23,7 @@ namespace KB.Web.Host.Controllers
         {
             
                 var list = _articleAppService.GetListWithTags(new QueryArticleInput());
-                return View(list);
+                return View(list.Items);
             
 
 
