@@ -53,24 +53,20 @@ namespace KB.Domain.DomainServices
             return entity;
         }
 
-        public IPagedResult<Article> GetList(QueryArticleDto dto)
+        public IPagedResult<Article> GetList(string keywords, int tagId, int categoryId, 
+            Paging paging)
         {
+            var query = _articleRepository.GetAll();
 
-            Expression<Func<Article, bool>> expression = null;
+            query = query
+                .WhereIf(e => e.CategoryId == categoryId, dto.CategoryId.HasValue)
+                .WhereIf(e => e.Title.Contains(keywords), !string.IsNullOrEmpty(keywords))
+                .WhereIf(e => e.Tags.Contains( t => t.Id == tagId), tagId.HasValue);
 
-            if (!string.IsNullOrEmpty(dto.Title))
-            {
-                expression = e => e.Title.Contains(dto.Title);
-            }
+            var totalCount = query.Count();
 
-            if(dto.ArticleId.HasValue)
-            {
-                expression = e => e.Id == dto.ArticleId.Value;
-            }
-            var totalCount = _articleRepository.Count(expression);
-            var query= _articleRepository.GetAll(expression);
-            return new PagedResultDto<Article>(totalCount, query.ToList());
-
+            return new PagedResultDto<Article>(totalCount, 
+                query.SoringAndPaging(soring, paging).ToList());
         }
 
         public Article Add(Article entity)
@@ -78,9 +74,9 @@ namespace KB.Domain.DomainServices
             return _articleRepository.Insert(entity);
         }
 
-        public bool Public(Article article)
+        public bool Publish(Article article)
         {
-            if (CategoryDomainService.Get(article.CategoryId).State != CategoryStateEnum.Audited)
+            if (CategoryDomainService.Get(article.CategoryId).State != CategoryStateEnum.Public)
             {
                 throw new Comm100Exception(100101, "Article本身的状态不正确，不能进行此操作！");
             }

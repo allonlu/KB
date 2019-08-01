@@ -37,19 +37,17 @@ namespace KB.Application.AppServices
         [Permission("Article.Tag.Add")]
         public TagDto AddTag(ArticleTagDto dto)
         {
-
-                var t = _articleTagDomainService.Add(Mapper.Map<ArticleTag>(dto));
-                return Mapper.Map<TagDto>(t);
-           
+            var t = _articleTagDomainService.Add(Mapper.Map<ArticleTag>(dto));
+            return Mapper.Map<TagDto>(t);
         }
+
         [Permission("Article.Tag.Add")]
         public TagDto AddTag(int articleId, AddTagDto tag)
         {
-
-               var t= _articleTagDomainService.AddTag(articleId, Mapper.Map<Tag>(tag));
-                return Mapper.Map<TagDto>(t);
-           
+            var t= _articleTagDomainService.AddTag(articleId, Mapper.Map<Tag>(tag));
+            return Mapper.Map<TagDto>(t);
         }
+
         [Permission("Article.Delete")]
         public int Delete(int articleId)
         {
@@ -60,39 +58,20 @@ namespace KB.Application.AppServices
         [Permission("Article.Get")]
         public ArticleDto Get(int id)
         {
-            
-                var entity = _articleDomainService.Get(id);
-                return Mapper.Map<ArticleDto>(entity);
-          
+            var entity = _articleDomainService.Get(id);
+            return Mapper.Map<ArticleDto>(entity);
         }
 
               
         
         
         [Permission("Article.Get")]
-        public IPagedResult<ArticleDto> GetList(QueryArticleInput dto)
+        public IPagedResult<ArticleListDto> GetList(ArticleQueryDto dto)
         {
-
-            return _articleDomainService.GetList(dto).MapTo<Article,ArticleDto>();
-
+            return _articleDomainService.GetList(dto.keywords, dto.tagId, dto.categoryId)
+                .MapTo<Article, ArticleListDto>();
         }
         
-        [Permission("Article.Get.Tag")]
-        public IPagedResult<ArticleWithTagsDto> GetListWithTags(QueryArticleInput dto)
-        {
-
-            var list = _articleDomainService.GetList(dto);
-
-            var query1 = list.Items.Select(
-                                t=> new ArticleWithTagsDto()
-                                {
-                                    Id = t.Id,
-                                    Title = t.Title,
-                                    Description = t.Description,
-                                    Tags = _articleTagDomainService.GetTags(t.Id).ProjectTo<TagDto>().ToList()
-                                });
-            return new PagedResultDto<ArticleWithTagsDto>(list.TotalCount, query1.ToList());
-        }
 
         [Permission("Article.Tag.Get")]
         public IList<TagDto> GetTags(int articleId)

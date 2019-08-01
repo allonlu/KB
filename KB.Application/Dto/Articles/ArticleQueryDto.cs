@@ -11,8 +11,12 @@ using System.Threading.Tasks;
 
 namespace KB.Application.Dto.Articles
 {
-   public class QueryArticleInput:QueryArticleDto
+    public class ArticleQueryDto
     {
+        public string tag { get; set; } 
 
+        public int? categoryId { get; set; }
+        
+        public string keywords { get; set; }
     }
 }

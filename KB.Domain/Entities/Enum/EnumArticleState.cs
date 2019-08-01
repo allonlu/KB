@@ -4,10 +4,10 @@ using System.Text;
 
 namespace KB.Domain.Entities
 {
-    public enum ArticleStateEnum
+    public enum EnumArticleState
     {
-         Init=0,
-         Audited=1,
-         Publish=2
+         Init = 0,
+         Audited = 1,
+         Publish = 2,
     }
 }

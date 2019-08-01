@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace KB.Application.Dto.Articles
 {
-    public class AddArticleDto
+    public class ArticleCreateDto
     {
         [Required]
         [MaxLength(StringLength.MaxNameLength)]
-        public string Title { get; set; }
+        public string title { get; set; }
 
-        [MaxLength(StringLength.MaxNameLength)]
-        public string Description { get; set; }
+        [MaxLength(StringLength.MaxContentLength)]
+        public string content { get; set; }
 
         [Required]
-        public int CategoryId { get; set; }
+        public int categoryId { get; set; }
 
-        public ArticleStateEnum State { get; set; }
+        public int[] tagIds { get; set; }
     }
 }

@@ -10,9 +10,6 @@ using System.Threading.Tasks;
 
 namespace KB.EntityFramework
 {
-
-
-
     public  class EFRepository<TEntity> : IRepository<TEntity> where TEntity :class, IEntity,new()
     { 
         protected DbContext _dbContext;

@@ -26,85 +26,43 @@ namespace KB.Web.Host.Controllers
             _articleAppService = articleAppService;
         }
         [HttpPost]
-        public ArticleDto Add([FromBody] AddArticleDto dto)
+        public ArticleDto Add([FromBody] ArticleCreateDto dto)
         {
             return _articleAppService.Add(dto);
         }
 
-        [HttpGet("{id}:withTags")]
-        public ArticleWithTagsDto GetWithTags(int id)
-        {
-
-            return _articleAppService.GetWithTags(id);
-
-
-        }
-
-        //public IActionResult GetList(QueryArticleInput dto,string include)
-        //{
-        //    switch (include) {
-        //        case "tags":
-        //            return Json(GetListWithTags(dto));
-        //        default:
-        //            return Json(GetList(dto));
-        //    }
-
-        //}
-
-       [HttpGet]
-        public IPagedResult<ArticleDto> GetList([FromQuery] QueryArticleInput dto)
+        [HttpGet]
+        public IPagedResult<ArticleDto> GetList([FromQuery] ArticleQueryDto dto)
         {
             return _articleAppService.GetList(dto);
         }
 
-        [HttpGet("~/api/[controller]:withTags")]
-        public IPagedResult<ArticleWithTagsDto> GetListWithTags([FromQuery] QueryArticleInput dto)
-        {
-            return _articleAppService.GetListWithTags(dto);
-
-        }
         [HttpGet("{id}")]
         public ArticleDto Get(int id)
         {
-
-
             return _articleAppService.Get(id);
-
-
         }
 
         [HttpDelete("{id}")]
         public int Delete(int id)
         {
-
             return _articleAppService.Delete(id);
-
-
         }
         [HttpPost("{articleId}/tags")]
         public TagDto AddTag(int articleId, [FromBody] AddTagDto dto)
         {
-
             return _articleAppService.AddTag(articleId, dto);
-
-
         }
         [HttpPost("{articleId}/tags/{tagId}")]
         public TagDto AddTag(int articleId, int tagId)
 
         {
-
             return _articleAppService.AddTag(new ArticleTagDto() { ArticleId = articleId, TagId = tagId });
-
-
         }
         [HttpDelete("{articleId}/tags/{tagId}")]
         public int DeleteTag(int articleId, int tagId)
-
         {
-
             return _articleAppService.DeleteTag(articleId, tagId);
-
         }
         [HttpDelete("{articleId}/tags")]
         public int DeleteTag(int articleId)
